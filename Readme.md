@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Наумов](https://up.htmlacademy.ru/javascript/20/user/57563).
-* Наставник: `Неизвестно`.
+* Наставник: [Дина Абрамова](https://up.htmlacademy.ru/javascript/20/user/1483099).
 
 ---
 
