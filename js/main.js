@@ -43,7 +43,7 @@ var shuffleArray = function (arr) {
   return cutArray(newArray);
 };
 
-var creationAd = function (number) {
+var createAd = function (number) {
   var arrAds = [];
 
   for (var i = 0; i < number; i++) {
@@ -85,7 +85,7 @@ var pinTemplate = document.querySelector('#pin')
   .content
   .querySelector('.map__pin');
 
-var creationPin = function (ad) {
+var createPin = function (ad) {
   var pinElement = pinTemplate.cloneNode(true);
   pinElement.style.left = ad.location.x - PIN_WIDTH / 2 + 'px';
   pinElement.style.top = ad.location.y - PIN_HEIGHT + 'px';
@@ -96,16 +96,11 @@ var creationPin = function (ad) {
 
 var mapPins = document.querySelector('.map__pins');
 var fragment = document.createDocumentFragment();
-var arrAds = creationAd(numberAds);
+var arrAds = createAd(numberAds);
 for (var i = 0; i < arrAds.length; i++) {
-  fragment.appendChild(creationPin(arrAds[i]));
+  fragment.appendChild(createPin(arrAds[i]));
 }
 mapPins.appendChild(fragment);
-
-
-// var test = creationPin(creationAd(1)[0]);
-// var test = creationAd(2);
-// console.log(test);
 
 removeMapFaded();
 
