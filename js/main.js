@@ -186,14 +186,14 @@ var setMainPinAddress = function () {
     locationX = Math.round(parseInt(pinLeft, 10) + PIN_WIDTH / 2);
     locationY = Math.round(parseInt(pinTop, 10) + PIN_HEIGHT);
     address.value = locationX + ', ' + locationY;
-  } else {
-    locationX = Math.round(parseInt(pinLeft, 10) + PIN_WIDTH / 2);
-    locationY = Math.round(parseInt(pinTop, 10) + PIN_WIDTH / 2);
-    address.value = locationX + ', ' + locationY;
+    return;
   }
+  locationX = Math.round(parseInt(pinLeft, 10) + PIN_WIDTH / 2);
+  locationY = Math.round(parseInt(pinTop, 10) + PIN_WIDTH / 2);
+  address.value = locationX + ', ' + locationY;
 };
 
-var formDisabled = function () {
+var disableForm = function () {
   for (var i = 0; i < fieldset.length; i++) {
     fieldset[i].disabled = true;
   }
@@ -206,7 +206,7 @@ var formDisabled = function () {
   setMainPinAddress();
 };
 
-formDisabled();
+disableForm();
 
 var activateDocument = function () {
   removeMapFaded();
@@ -240,22 +240,30 @@ mapPinMain.addEventListener('mousedown', onPinPress);
 mapPinMain.addEventListener('keydown', onPinPress);
 // -----------------------------------------------------------------------------//
 
-
 var setMinPrice = function () {
-  if (type.value === 'bungalo') {
-    price.setAttribute('min', 0);
-    price.setAttribute('placeholder', 0);
-  } else if (type.value === 'flat') {
-    price.setAttribute('min', 1000);
-    price.setAttribute('placeholder', 1000);
-  } else if (type.value === 'house') {
+  var minValue = 0;
+  var placeholderValue = 0;
 
-    price.setAttribute('min', 5000);
-    price.setAttribute('placeholder', 5000);
-  } else {
-    price.setAttribute('min', 10000);
-    price.setAttribute('placeholder', 10000);
+  switch (type.value) {
+    case 'bungalo':
+      minValue = 0;
+      placeholderValue = 0;
+      break;
+    case 'flat':
+      minValue = 1000;
+      placeholderValue = 1000;
+      break;
+    case 'house':
+      minValue = 5000;
+      placeholderValue = 5000;
+      break;
+    default:
+      minValue = 10000;
+      placeholderValue = 10000;
   }
+
+  price.setAttribute('min', minValue);
+  price.setAttribute('placeholder', placeholderValue);
 };
 
 setMinPrice();
@@ -290,33 +298,21 @@ timeOut.addEventListener('change', setTimeIn);
 // -----------------------------------------------------------------------------//
 
 var setCapacity = function () {
-  if (roomNumber.value === '1') {
-    optionCapacity[0].disabled = true;
-    optionCapacity[1].disabled = true;
-    optionCapacity[2].disabled = false;
-    optionCapacity[3].disabled = true;
-    capacity.value = '1';
-  } else if (roomNumber.value === '2') {
-    optionCapacity[0].disabled = true;
-    optionCapacity[1].disabled = false;
-    optionCapacity[2].disabled = false;
-    optionCapacity[3].disabled = true;
-    capacity.value = '2';
-  } else if (roomNumber.value === '3') {
-    for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < optionCapacity.length; i++) {
+    if (roomNumber.value >= optionCapacity[i].value && optionCapacity[i].value !== '0') {
       optionCapacity[i].disabled = false;
+      capacity.value = roomNumber.value;
+    } else if (roomNumber.value === '100') {
+      for (var j = 0; j < 3; j++) {
+        optionCapacity[j].disabled = true;
+      }
+      optionCapacity[i].disabled = false;
+      capacity.value = '0';
+    } else {
+      optionCapacity[i].disabled = true;
     }
-    optionCapacity[3].disabled = true;
-    capacity.value = '3';
-  } else {
-    for (var j = 0; j < 3; j++) {
-      optionCapacity[j].disabled = true;
-    }
-    optionCapacity[3].disabled = false;
-    capacity.value = '0';
   }
 };
-
 
 setCapacity();
 
