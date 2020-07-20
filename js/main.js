@@ -14,6 +14,7 @@ var LOCATION_Y_MAX = 630;
 var PIN_WIDTH = 65;
 var PIN_HEIGHT = 77;
 var numberAds = 8;
+var pinsArr = [];
 
 var getRandomInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -93,6 +94,16 @@ var createPin = function (ad) {
   return pinElement;
 };
 
+var getPinsArr = function (mapPins) {
+  var elems = mapPins.querySelectorAll('.map__pin');
+  var elemsArr = [];
+
+  for (var i = 1; i < elems.length; i++) {
+    elemsArr[i - 1] = elems[i];
+  }
+  pinsArr = elemsArr;
+};
+
 var activatePins = function (ads) {
   var mapPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
@@ -101,9 +112,11 @@ var activatePins = function (ads) {
     fragment.appendChild(createPin(ads[i]));
   }
   mapPins.appendChild(fragment);
+  getPinsArr(mapPins);
 };
 
 var arrAds = createAd(numberAds); //  ------  Массив объявлений  ------  //
+
 
 var createCard = function (ad) {
   var cardTemplate = document.querySelector('#card')
@@ -152,12 +165,47 @@ var createCard = function (ad) {
 
   document.querySelector('.map').insertAdjacentElement('beforebegin', cardElement);
 
-  cardElement.querySelector('.popup__close').addEventListener('click', function closeCard() {
-    cardElement.style.display = 'none';
-    cardElement.querySelector('.popup__close').removeEventListener('click', closeCard);
-  });
+  var closeCard = function (evt) {
+    var buttonPressed = evt.button;
+
+    if (buttonPressed === 0 || evt.key === 'Escape') {
+      cardElement.parentNode.removeChild(cardElement);
+      cardElement.querySelector('.popup__close').removeEventListener('mousedown', closeCard);
+      document.removeEventListener('keydown', closeCard);
+      pinsAddEventOpenCard();
+    }
+  };
+
+  cardElement.querySelector('.popup__close').addEventListener('mousedown', closeCard);
+  document.addEventListener('keydown', closeCard);
 };
 
+// ====================================================================================================================//
+var OpenCard = function (evt) {
+  var buttonPressed = evt.button;
+  if (buttonPressed === 0 || evt.key === 'Enter') {
+    for (var i = 0; i < pinsArr.length; i++) {
+      if (pinsArr[i] === this) {
+        createCard(arrAds[i]);
+      }
+    }
+    pinsRemoveEventOpenCard();
+  }
+};
+
+var pinsAddEventOpenCard = function () {
+  for (var i = 0; i < pinsArr.length; i++) {
+    pinsArr[i].addEventListener('mousedown', OpenCard);
+    pinsArr[i].addEventListener('keydown', OpenCard);
+  }
+};
+
+var pinsRemoveEventOpenCard = function () {
+  for (var i = 0; i < pinsArr.length; i++) {
+    pinsArr[i].removeEventListener('mousedown', OpenCard);
+    pinsArr[i].removeEventListener('keydown', OpenCard);
+  }
+};
 // ====================================================================================================================//
 //* *****************************************************************************//
 var fieldset = document.querySelectorAll('fieldset');
@@ -221,7 +269,7 @@ var activateDocument = function () {
   }
 
   activatePins(arrAds);
-  createCard(arrAds[0]);
+  pinsAddEventOpenCard();
   activeDocument = true;
   mapPinMain.removeEventListener('mousedown', onPinPress);
   mapPinMain.removeEventListener('keydown', onPinPress);
@@ -317,3 +365,4 @@ var setCapacity = function () {
 setCapacity();
 
 roomNumber.addEventListener('change', setCapacity);
+
