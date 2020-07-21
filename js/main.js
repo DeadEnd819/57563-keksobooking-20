@@ -130,6 +130,19 @@ var createCard = function (ad) {
     palace: 'Дворец',
   };
 
+  var clearCard = function () {
+    var popup = document.querySelector('.popup');
+
+    if (popup !== null) {
+      popup.parentNode.removeChild(popup);
+      cardElement.querySelector('.popup__close').removeEventListener('mousedown', closeCard);
+      document.removeEventListener('keydown', closeCard);
+      pinsAddEventOpenCard();
+    }
+  };
+
+  clearCard();
+
   var setFeatures = function () {
     var featuresTemplate = cardElement.querySelector('.popup__features');
     var arrFeatures = ad.offer.features;
@@ -169,10 +182,7 @@ var createCard = function (ad) {
     var buttonPressed = evt.button;
 
     if (buttonPressed === 0 || evt.key === 'Escape') {
-      cardElement.parentNode.removeChild(cardElement);
-      cardElement.querySelector('.popup__close').removeEventListener('mousedown', closeCard);
-      document.removeEventListener('keydown', closeCard);
-      pinsAddEventOpenCard();
+      clearCard();
     }
   };
 
@@ -189,7 +199,6 @@ var OpenCard = function (evt) {
         createCard(arrAds[i]);
       }
     }
-    pinsRemoveEventOpenCard();
   }
 };
 
@@ -252,6 +261,7 @@ var disableForm = function () {
 
   activeDocument = false;
   setMainPinAddress();
+  pinsRemoveEventOpenCard();
 };
 
 disableForm();
@@ -321,22 +331,18 @@ type.addEventListener('change', setMinPrice);
 // -----------------------------------------------------------------------------//
 
 var setTimeOut = function () {
-  if (timeIn.value === '12:00') {
-    timeOut.value = '12:00';
-  } else if (timeIn.value === '13:00') {
-    timeOut.value = '13:00';
-  } else {
-    timeOut.value = '14:00';
+  for (var i = 0; i < CHECKINS.length; i++) {
+    if (timeIn.value === CHECKINS[i]) {
+      timeOut.value = CHECKOUTS[i];
+    }
   }
 };
 
 var setTimeIn = function () {
-  if (timeOut.value === '12:00') {
-    timeIn.value = '12:00';
-  } else if (timeOut.value === '13:00') {
-    timeIn.value = '13:00';
-  } else {
-    timeIn.value = '14:00';
+  for (var i = 0; i < CHECKOUTS.length; i++) {
+    if (timeOut.value === CHECKOUTS[i]) {
+      timeIn.value = CHECKINS[i];
+    }
   }
 };
 
