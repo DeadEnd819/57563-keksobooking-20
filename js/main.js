@@ -14,6 +14,7 @@ var LOCATION_Y_MAX = 630;
 var PIN_WIDTH = 65;
 var PIN_HEIGHT = 77;
 var numberAds = 8;
+var pinsArr = [];
 
 var getRandomInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -93,6 +94,16 @@ var createPin = function (ad) {
   return pinElement;
 };
 
+var getPinsArr = function (mapPins) {
+  var elems = mapPins.querySelectorAll('.map__pin');
+  var elemsArr = [];
+
+  for (var i = 1; i < elems.length; i++) {
+    elemsArr[i - 1] = elems[i];
+  }
+  pinsArr = elemsArr;
+};
+
 var activatePins = function (ads) {
   var mapPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
@@ -101,9 +112,11 @@ var activatePins = function (ads) {
     fragment.appendChild(createPin(ads[i]));
   }
   mapPins.appendChild(fragment);
+  getPinsArr(mapPins);
 };
 
 var arrAds = createAd(numberAds); //  ------  Массив объявлений  ------  //
+
 
 var createCard = function (ad) {
   var cardTemplate = document.querySelector('#card')
@@ -116,6 +129,19 @@ var createCard = function (ad) {
     house: 'Дом',
     palace: 'Дворец',
   };
+
+  var clearCard = function () {
+    var popup = document.querySelector('.popup');
+
+    if (popup !== null) {
+      popup.parentNode.removeChild(popup);
+      cardElement.querySelector('.popup__close').removeEventListener('mousedown', closeCard);
+      document.removeEventListener('keydown', closeCard);
+      pinsAddEventOpenCard();
+    }
+  };
+
+  clearCard();
 
   var setFeatures = function () {
     var featuresTemplate = cardElement.querySelector('.popup__features');
@@ -152,12 +178,43 @@ var createCard = function (ad) {
 
   document.querySelector('.map').insertAdjacentElement('beforebegin', cardElement);
 
-  cardElement.querySelector('.popup__close').addEventListener('click', function closeCard() {
-    cardElement.style.display = 'none';
-    cardElement.querySelector('.popup__close').removeEventListener('click', closeCard);
-  });
+  var closeCard = function (evt) {
+    var buttonPressed = evt.button;
+
+    if (buttonPressed === 0 || evt.key === 'Escape') {
+      clearCard();
+    }
+  };
+
+  cardElement.querySelector('.popup__close').addEventListener('mousedown', closeCard);
+  document.addEventListener('keydown', closeCard);
 };
 
+// ====================================================================================================================//
+var OpenCard = function (evt) {
+  var buttonPressed = evt.button;
+  if (buttonPressed === 0 || evt.key === 'Enter') {
+    for (var i = 0; i < pinsArr.length; i++) {
+      if (pinsArr[i] === this) {
+        createCard(arrAds[i]);
+      }
+    }
+  }
+};
+
+var pinsAddEventOpenCard = function () {
+  for (var i = 0; i < pinsArr.length; i++) {
+    pinsArr[i].addEventListener('mousedown', OpenCard);
+    pinsArr[i].addEventListener('keydown', OpenCard);
+  }
+};
+
+var pinsRemoveEventOpenCard = function () {
+  for (var i = 0; i < pinsArr.length; i++) {
+    pinsArr[i].removeEventListener('mousedown', OpenCard);
+    pinsArr[i].removeEventListener('keydown', OpenCard);
+  }
+};
 // ====================================================================================================================//
 //* *****************************************************************************//
 var fieldset = document.querySelectorAll('fieldset');
@@ -204,6 +261,7 @@ var disableForm = function () {
 
   activeDocument = false;
   setMainPinAddress();
+  pinsRemoveEventOpenCard();
 };
 
 disableForm();
@@ -221,7 +279,7 @@ var activateDocument = function () {
   }
 
   activatePins(arrAds);
-  createCard(arrAds[0]);
+  pinsAddEventOpenCard();
   activeDocument = true;
   mapPinMain.removeEventListener('mousedown', onPinPress);
   mapPinMain.removeEventListener('keydown', onPinPress);
@@ -273,22 +331,18 @@ type.addEventListener('change', setMinPrice);
 // -----------------------------------------------------------------------------//
 
 var setTimeOut = function () {
-  if (timeIn.value === '12:00') {
-    timeOut.value = '12:00';
-  } else if (timeIn.value === '13:00') {
-    timeOut.value = '13:00';
-  } else {
-    timeOut.value = '14:00';
+  for (var i = 0; i < CHECKINS.length; i++) {
+    if (timeIn.value === CHECKINS[i]) {
+      timeOut.value = CHECKOUTS[i];
+    }
   }
 };
 
 var setTimeIn = function () {
-  if (timeOut.value === '12:00') {
-    timeIn.value = '12:00';
-  } else if (timeOut.value === '13:00') {
-    timeIn.value = '13:00';
-  } else {
-    timeIn.value = '14:00';
+  for (var i = 0; i < CHECKOUTS.length; i++) {
+    if (timeOut.value === CHECKOUTS[i]) {
+      timeIn.value = CHECKINS[i];
+    }
   }
 };
 
@@ -317,3 +371,4 @@ var setCapacity = function () {
 setCapacity();
 
 roomNumber.addEventListener('change', setCapacity);
+
