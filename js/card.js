@@ -11,6 +11,7 @@
     house: 'Дом',
     palace: 'Дворец',
   };
+  var activePin = '';
 
   var clearCard = function () {
     var popup = document.querySelector('.popup');
@@ -20,6 +21,7 @@
       cardElement.querySelector('.popup__close').removeEventListener('mousedown', closeCard);
       document.removeEventListener('keydown', closeCard);
       window.map.pinsAddEventOpenCard();
+
     }
   };
 
@@ -49,12 +51,15 @@
     var buttonPressed = evt.button;
 
     if (buttonPressed === 0 || evt.key === 'Escape') {
+      activePin.classList.remove('map__pin--active');
+      activePin = '';
       clearCard();
     }
   };
 
   window.card = {
-    createCard: function (ad) {
+    createCard: function (ad, pin) {
+      activePin = pin;
       clearCard();
 
       cardElement.querySelector('.popup__title').textContent = ad.offer.title;

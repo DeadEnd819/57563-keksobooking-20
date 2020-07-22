@@ -7,8 +7,8 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var LOCATION_X_MIN = 100;
-var LOCATION_X_MAX = 1100;
+var LOCATION_X_MIN = 0;
+var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var PIN_WIDTH = 65;
