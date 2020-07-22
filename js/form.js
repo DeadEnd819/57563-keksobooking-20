@@ -5,7 +5,7 @@
     var minValue = 0;
     var placeholderValue = 0;
 
-    switch (window.util.type.value) {
+    switch (window.elements.type.value) {
       case 'bungalo':
         minValue = 0;
         placeholderValue = 0;
@@ -23,51 +23,51 @@
         placeholderValue = 10000;
     }
 
-    window.util.price.setAttribute('min', minValue);
-    window.util.price.setAttribute('placeholder', placeholderValue);
+    window.elements.price.setAttribute('min', minValue);
+    window.elements.price.setAttribute('placeholder', placeholderValue);
   };
 
   setMinPrice();
 
-  window.util.type.addEventListener('change', setMinPrice);
+  window.elements.type.addEventListener('change', setMinPrice);
 
   var setTimeOut = function () {
-    for (var i = 0; i < window.util.CHECKINS.length; i++) {
-      if (window.util.timeIn.value === window.util.CHECKINS[i]) {
-        window.util.timeOut.value = window.util.CHECKOUTS[i];
+    for (var i = 0; i < window.constants.CHECKINS.length; i++) {
+      if (window.elements.timeIn.value === window.constants.CHECKINS[i]) {
+        window.elements.timeOut.value = window.constants.CHECKOUTS[i];
       }
     }
   };
 
   var setTimeIn = function () {
-    for (var i = 0; i < window.util.CHECKOUTS.length; i++) {
-      if (window.util.timeOut.value === window.util.CHECKOUTS[i]) {
-        window.util.timeIn.value = window.util.CHECKINS[i];
+    for (var i = 0; i < window.constants.CHECKOUTS.length; i++) {
+      if (window.elements.timeOut.value === window.constants.CHECKOUTS[i]) {
+        window.elements.timeIn.value = window.constants.CHECKINS[i];
       }
     }
   };
 
-  window.util.timeIn.addEventListener('change', setTimeOut);
-  window.util.timeOut.addEventListener('change', setTimeIn);
+  window.elements.timeIn.addEventListener('change', setTimeOut);
+  window.elements.timeOut.addEventListener('change', setTimeIn);
 
   var setCapacity = function () {
-    for (var i = 0; i < window.util.optionCapacity.length; i++) {
-      if (window.util.roomNumber.value >= window.util.optionCapacity[i].value && window.util.optionCapacity[i].value !== '0') {
-        window.util.optionCapacity[i].disabled = false;
-        window.util.capacity.value = window.util.roomNumber.value;
-      } else if (window.util.roomNumber.value === '100') {
+    for (var i = 0; i < window.elements.optionCapacity.length; i++) {
+      if (window.elements.roomNumber.value >= window.elements.optionCapacity[i].value && window.elements.optionCapacity[i].value !== '0') {
+        window.elements.optionCapacity[i].disabled = false;
+        window.elements.capacity.value = window.elements.roomNumber.value;
+      } else if (window.elements.roomNumber.value === '100') {
         for (var j = 0; j < 3; j++) {
-          window.util.optionCapacity[j].disabled = true;
+          window.elements.optionCapacity[j].disabled = true;
         }
-        window.util.optionCapacity[i].disabled = false;
-        window.util.capacity.value = '0';
+        window.elements.optionCapacity[i].disabled = false;
+        window.elements.capacity.value = '0';
       } else {
-        window.util.optionCapacity[i].disabled = true;
+        window.elements.optionCapacity[i].disabled = true;
       }
     }
   };
 
   setCapacity();
 
-  window.util.roomNumber.addEventListener('change', setCapacity);
+  window.elements.roomNumber.addEventListener('change', setCapacity);
 })();

@@ -33,8 +33,8 @@
       var arrAds = [];
 
       for (var i = 0; i < number; i++) {
-        var locationX = getRandomInRange(window.util.LOCATION_X_MIN, window.util.LOCATION_X_MAX);
-        var locationY = getRandomInRange(window.util.LOCATION_Y_MIN, window.util.LOCATION_Y_MAX);
+        var locationX = getRandomInRange(window.constants.LOCATION_X_MIN, window.constants.LOCATION_X_MAX);
+        var locationY = getRandomInRange(window.constants.LOCATION_Y_MIN, window.constants.LOCATION_Y_MAX);
         var ad = {
           author: {
             avatar: 'img/avatars/user0' + (i + 1) + '.png',
@@ -43,14 +43,14 @@
             title: 'Заголовок',
             address: locationX + ', ' + locationY,
             price: getRandomInRange(1, 5000),
-            type: arrayRandElement(window.util.TYPES),
+            type: arrayRandElement(window.constants.TYPES),
             rooms: getRandomInRange(1, 100),
             guests: getRandomInRange(0, 3),
-            checkin: arrayRandElement(window.util.CHECKINS),
-            checkout: arrayRandElement(window.util.CHECKOUTS),
-            features: shuffleArray(window.util.FEATURES),
+            checkin: arrayRandElement(window.constants.CHECKINS),
+            checkout: arrayRandElement(window.constants.CHECKOUTS),
+            features: shuffleArray(window.constants.FEATURES),
             description: 'Описание',
-            photos: shuffleArray(window.util.PHOTOS),
+            photos: shuffleArray(window.constants.PHOTOS),
           },
           location: {
             x: locationX,
@@ -63,6 +63,5 @@
     },
     arrAds: [],
   };
-
-  window.data.arrAds = window.data.createAd(window.util.numberAds);
+  window.data.arrAds = window.data.createAd(window.constants.NUMBER_ADS);
 })();
