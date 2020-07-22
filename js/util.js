@@ -31,7 +31,9 @@
   var roomNumber = adForm.querySelector('#room_number');
   var capacity = adForm.querySelector('#capacity');
   var optionCapacity = capacity.querySelectorAll('option');
+  var mapPins = document.querySelector('.map__pins');
   var activeDocument = false;
+  var pinDataName = [];
 
   window.util = {
     TYPES: TYPES,
@@ -60,6 +62,8 @@
     roomNumber: roomNumber,
     capacity: capacity,
     optionCapacity: optionCapacity,
+    mapPins: mapPins,
     activeDocument: activeDocument,
+    pinDataName: pinDataName,
   };
 })();

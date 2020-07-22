@@ -10,7 +10,7 @@
       pinElement.querySelector('img').alt = ad.offer.title;
       return pinElement;
     },
-    getPinsArr: function (mapPins) {
+    setPinsArr: function (mapPins) {
       var elems = mapPins.querySelectorAll('.map__pin');
       var elemsArr = [];
 
@@ -20,14 +20,16 @@
       window.util.pinsArr = elemsArr;
     },
     activatePins: function (ads) {
-      var mapPins = document.querySelector('.map__pins');
       var fragment = document.createDocumentFragment();
 
       for (var i = 0; i < ads.length; i++) {
-        fragment.appendChild(this.createPin(ads[i]));
+        var elem = this.createPin(ads[i]);
+        elem.dataset.id = 'pin_' + i;
+        window.util.pinDataName[i] = elem.dataset.id;
+        fragment.appendChild(elem);
       }
-      mapPins.appendChild(fragment);
-      this.getPinsArr(mapPins);
+      window.util.mapPins.appendChild(fragment);
+      this.setPinsArr(window.util.mapPins);
     },
   };
 })();
