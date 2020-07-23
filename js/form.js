@@ -6,15 +6,15 @@
     var placeholderValue = 0;
 
     switch (window.elements.type.value) {
-      case 'bungalo':
+      case window.constants.TYPES[0]:
         minValue = 0;
         placeholderValue = 0;
         break;
-      case 'flat':
+      case window.constants.TYPES[1]:
         minValue = 1000;
         placeholderValue = 1000;
         break;
-      case 'house':
+      case window.constants.TYPES[2]:
         minValue = 5000;
         placeholderValue = 5000;
         break;

@@ -1,6 +1,12 @@
 'use strict';
 
-var TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var TYPES = ['bungalo', 'flat', 'house', 'palace'];
+var TYPE_HOUSING = {
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+};
 var CHECKINS = ['12:00', '13:00', '14:00'];
 var CHECKOUTS = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -17,6 +23,7 @@ var NUMBER_ADS = 8;
 
 window.constants = {
   TYPES: TYPES,
+  TYPE_HOUSING: TYPE_HOUSING,
   CHECKINS: CHECKINS,
   CHECKOUTS: CHECKOUTS,
   FEATURES: FEATURES,
