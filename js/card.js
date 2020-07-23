@@ -5,21 +5,17 @@
     .content
     .querySelector('.map__card');
   var cardElement = cardTemplate.cloneNode(true);
-  var typeHousing = {
-    flat: 'Квартира',
-    bungalo: 'Бунгало',
-    house: 'Дом',
-    palace: 'Дворец',
-  };
+  var activePin = '';
 
   var clearCard = function () {
     var popup = document.querySelector('.popup');
 
     if (popup !== null) {
       popup.parentNode.removeChild(popup);
-      cardElement.querySelector('.popup__close').removeEventListener('mousedown', closeCard);
+      cardElement.querySelector('.popup__close').removeEventListener('click', closeCard);
       document.removeEventListener('keydown', closeCard);
       window.map.pinsAddEventOpenCard();
+
     }
   };
 
@@ -49,18 +45,21 @@
     var buttonPressed = evt.button;
 
     if (buttonPressed === 0 || evt.key === 'Escape') {
+      window.card.activePin.classList.remove('map__pin--active');
       clearCard();
     }
   };
 
   window.card = {
-    createCard: function (ad) {
+    activePin: activePin,
+    createCard: function (ad, pin) {
+      window.card.activePin = pin;
       clearCard();
 
       cardElement.querySelector('.popup__title').textContent = ad.offer.title;
       cardElement.querySelector('.popup__text--address').textContent = ad.offer.address;
       cardElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
-      cardElement.querySelector('.popup__type').textContent = typeHousing[ad.offer.type];
+      cardElement.querySelector('.popup__type').textContent = window.constants.TYPE_HOUSING[ad.offer.type];
       cardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
       cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
       cardElement.querySelector('.popup__description').textContent = ad.offer.description;
@@ -70,7 +69,7 @@
 
       document.querySelector('.map').insertAdjacentElement('beforebegin', cardElement);
 
-      cardElement.querySelector('.popup__close').addEventListener('mousedown', closeCard);
+      cardElement.querySelector('.popup__close').addEventListener('click', closeCard);
       document.addEventListener('keydown', closeCard);
     },
   };
