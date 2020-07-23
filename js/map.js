@@ -24,16 +24,12 @@
       }
     },
     pinsAddEventOpenCard: function () {
-      for (var i = 0; i < window.map.pinsArr.length; i++) {
-        window.elements.mapPins.addEventListener('click', this.openCard);
-        window.elements.mapPins.addEventListener('keydown', this.openCard);
-      }
+      window.elements.mapPins.addEventListener('click', this.openCard);
+      window.elements.mapPins.addEventListener('keydown', this.openCard);
     },
     pinsRemoveEventOpenCard: function () {
-      for (var i = 0; i < this.pinsArr.length; i++) {
-        window.elements.mapPins.removeEventListener('click', this.openCard);
-        window.elements.mapPins.removeEventListener('keydown', this.openCard);
-      }
+      window.elements.mapPins.removeEventListener('click', this.openCard);
+      window.elements.mapPins.removeEventListener('keydown', this.openCard);
     },
     setMainPinAddress: function () {
       var pinLeft = window.elements.mapPinMain.style.left;
