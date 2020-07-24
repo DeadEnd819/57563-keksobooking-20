@@ -4,7 +4,7 @@
     OK: 200
   };
 
-  var fetch = function (onSuccess, onError, method, url, data) {
+  var dataExchange = function (onSuccess, onError, method, url, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -30,7 +30,7 @@
   };
 
   window.api = {
-    fetch: fetch,
+    dataExchange: dataExchange,
     arrAds: [],
   };
 })();

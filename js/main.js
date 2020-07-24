@@ -81,8 +81,7 @@
     document.addEventListener('keydown', onClickSuccessMessageClose);
   };
 
-  // window.api.loadData(onSuccessLoadData, createErrorMessage);
-  window.api.fetch(onSuccessLoadData, createErrorMessage, window.constants.METHOD[0], window.constants.LOAD_URL);
+  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.METHOD[0], window.constants.LOAD_URL);
   // ================================================================================= //
 
   var activateDocument = function () {
@@ -105,7 +104,7 @@
     window.elements.mapPinMain.removeEventListener('keydown', onPinPress);
 
     window.elements.adForm.addEventListener('submit', function (evt) {
-      window.api.fetch(createSuccessMessage, createErrorMessage, window.constants.METHOD[1], window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
+      window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.METHOD[1], window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
       evt.preventDefault();
     });
   };
