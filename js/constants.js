@@ -20,6 +20,9 @@ var LOCATION_Y_MAX = 630;
 var PIN_WIDTH = 65;
 var PIN_HEIGHT = 77;
 var NUMBER_ADS = 8;
+var LOAD_URL = 'https://javascript.pages.academy/keksobooking/data';
+var UPLOAD_URL = 'https://javascript.pages.academy/keksobooking';
+var TIMEOUT_IN_MS = 10000;
 
 window.constants = {
   TYPES: TYPES,
@@ -35,4 +38,7 @@ window.constants = {
   PIN_WIDTH: PIN_WIDTH,
   PIN_HEIGHT: PIN_HEIGHT,
   NUMBER_ADS: NUMBER_ADS,
+  LOAD_URL: LOAD_URL,
+  UPLOAD_URL: UPLOAD_URL,
+  TIMEOUT_IN_MS: TIMEOUT_IN_MS,
 };

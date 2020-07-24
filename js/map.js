@@ -7,7 +7,7 @@
   window.map = {
     pinDataName: pinDataName,
     pinsArr: pinsArr,
-    openCard: function (evt) {
+    onClickOpenCard: function (evt) {
       var buttonPressed = evt.button;
 
       if (buttonPressed === 0 || evt.key === 'Enter') {
@@ -19,17 +19,18 @@
           if (window.map.pinDataName[i] === evt.target.dataset.id || window.map.pinDataName[i] === evt.target.parentElement.dataset.id) {
             window.card.createCard(window.data.arrAds[i], window.map.pinsArr[i]);
             window.map.pinsArr[i].classList.add('map__pin--active');
+            break;
           }
         }
       }
     },
     pinsAddEventOpenCard: function () {
-      window.elements.mapPins.addEventListener('click', this.openCard);
-      window.elements.mapPins.addEventListener('keydown', this.openCard);
+      window.elements.mapPins.addEventListener('click', this.onClickOpenCard);
+      window.elements.mapPins.addEventListener('keydown', this.onClickOpenCard);
     },
     pinsRemoveEventOpenCard: function () {
-      window.elements.mapPins.removeEventListener('click', this.openCard);
-      window.elements.mapPins.removeEventListener('keydown', this.openCard);
+      window.elements.mapPins.removeEventListener('click', this.onClickOpenCard);
+      window.elements.mapPins.removeEventListener('keydown', this.onClickOpenCard);
     },
     setMainPinAddress: function () {
       var pinLeft = window.elements.mapPinMain.style.left;
