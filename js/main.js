@@ -69,7 +69,6 @@
     document.addEventListener('click', onClickErrorMessageClose);
     document.addEventListener('keydown', onClickErrorMessageClose);
   };
-  createErrorMessage();
 
   var createSuccessMessage = function () {
     var successTemplate = document.querySelector('#success')
