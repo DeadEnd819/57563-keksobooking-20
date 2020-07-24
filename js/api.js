@@ -4,7 +4,7 @@
     OK: 200
   };
 
-  var loadData = function (onSuccess, onError) {
+  var fetch = function (onSuccess, onError, method, url, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -25,11 +25,12 @@
 
     xhr.timeout = window.constants.TIMEOUT_IN_MS;
 
-    xhr.open('GET', window.constants.LOAD_URL);
-    xhr.send();
+    xhr.open(method, url);
+    xhr.send(data);
   };
 
-  window.load = {
-    loadData: loadData,
+  window.api = {
+    fetch: fetch,
+    arrAds: [],
   };
 })();

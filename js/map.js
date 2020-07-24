@@ -17,7 +17,7 @@
 
         for (var i = 0; i < window.map.pinsArr.length; i++) {
           if (window.map.pinDataName[i] === evt.target.dataset.id || window.map.pinDataName[i] === evt.target.parentElement.dataset.id) {
-            window.card.createCard(window.data.arrAds[i], window.map.pinsArr[i]);
+            window.card.createCard(window.api.arrAds[i], window.map.pinsArr[i]);
             window.map.pinsArr[i].classList.add('map__pin--active');
             break;
           }

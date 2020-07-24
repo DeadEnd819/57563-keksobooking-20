@@ -23,6 +23,7 @@ var NUMBER_ADS = 8;
 var LOAD_URL = 'https://javascript.pages.academy/keksobooking/data';
 var UPLOAD_URL = 'https://javascript.pages.academy/keksobooking';
 var TIMEOUT_IN_MS = 10000;
+var METHOD = ['GET', 'POST'];
 
 window.constants = {
   TYPES: TYPES,
@@ -41,4 +42,5 @@ window.constants = {
   LOAD_URL: LOAD_URL,
   UPLOAD_URL: UPLOAD_URL,
   TIMEOUT_IN_MS: TIMEOUT_IN_MS,
+  METHOD: METHOD,
 };

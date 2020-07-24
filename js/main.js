@@ -52,7 +52,7 @@
   var onSuccessLoadData = function (data) {
     for (var i = 0; i < window.constants.NUMBER_ADS; i++) {
       if (typeof data[i]['offer'] !== 'undefined') {
-        window.data.arrAds.push(data[i]);
+        window.api.arrAds.push(data[i]);
       }
     }
   };
@@ -81,7 +81,8 @@
     document.addEventListener('keydown', onClickSuccessMessageClose);
   };
 
-  window.load.loadData(onSuccessLoadData, createErrorMessage);
+  // window.api.loadData(onSuccessLoadData, createErrorMessage);
+  window.api.fetch(onSuccessLoadData, createErrorMessage, window.constants.METHOD[0], window.constants.LOAD_URL);
   // ================================================================================= //
 
   var activateDocument = function () {
@@ -96,7 +97,7 @@
       window.elements.select[j].disabled = false;
     }
 
-    window.pin.activatePins(window.data.arrAds);
+    window.pin.activatePins(window.api.arrAds);
     window.map.pinsAddEventOpenCard();
     window.main.activeDocument = true;
 
@@ -104,7 +105,7 @@
     window.elements.mapPinMain.removeEventListener('keydown', onPinPress);
 
     window.elements.adForm.addEventListener('submit', function (evt) {
-      window.upload.uploadData(new FormData(window.elements.adForm), createSuccessMessage, createErrorMessage);
+      window.api.fetch(createSuccessMessage, createErrorMessage, window.constants.METHOD[1], window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
       evt.preventDefault();
     });
   };
