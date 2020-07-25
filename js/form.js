@@ -9,7 +9,7 @@
 
     window.elements.adForm.reset();
     window.pin.resetMainPin();
-    window.map.setMainPinAddress(); 6;
+    window.map.setMainPinAddress();
   };
 
   var setMinPrice = function () {
