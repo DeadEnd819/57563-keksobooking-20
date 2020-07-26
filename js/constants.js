@@ -24,6 +24,7 @@ var LOAD_URL = 'https://javascript.pages.academy/keksobooking/data';
 var UPLOAD_URL = 'https://javascript.pages.academy/keksobooking';
 var TIMEOUT_IN_MS = 10000;
 var METHOD = ['GET', 'POST'];
+var DEBOUNCE_INTERVAL = 500;
 
 window.constants = {
   TYPES: TYPES,
@@ -43,4 +44,5 @@ window.constants = {
   UPLOAD_URL: UPLOAD_URL,
   TIMEOUT_IN_MS: TIMEOUT_IN_MS,
   METHOD: METHOD,
+  DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL,
 };

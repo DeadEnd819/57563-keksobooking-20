@@ -96,7 +96,7 @@
     window.pin.activatePins(window.filter.alteredAds);
   };
 
-  var onFilterChange = function (evt) {
+  var onFilterChange = window.utils.debounce(function (evt) {
     var elem = evt.target;
 
     switch (elem) {
@@ -141,7 +141,7 @@
         updatePins();
         break;
     }
-  };
+  });
 
   window.filter = {
     updatePins: updatePins,
