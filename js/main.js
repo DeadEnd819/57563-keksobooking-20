@@ -134,7 +134,7 @@
       window.elements.select[j].disabled = false;
     }
 
-    window.pin.activatePins(window.api.arrAds);
+    window.filter.updatePins();
     window.map.pinsAddEventOpenCard();
     window.main.activeDocument = true;
 
