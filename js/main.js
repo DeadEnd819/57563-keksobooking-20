@@ -60,6 +60,7 @@
     window.elements.adForm.removeEventListener('submit', submitFormEvent);
     window.elements.reset.removeEventListener('click', window.form.noClickResetForm);
     window.elements.reset.removeEventListener('keydown', window.form.noClickResetForm);
+    window.elements.filterForm.removeEventListener('change', window.filter.onFilterChange);
   };
 
   disableForm();
@@ -87,7 +88,7 @@
   };
 
   var onSuccessLoadData = function (data) {
-    for (var i = 0; i < window.constants.NUMBER_ADS; i++) {
+    for (var i = 0; i < data.length; i++) {
       if (typeof data[i]['offer'] !== 'undefined') {
         window.api.arrAds.push(data[i]);
       }
@@ -121,7 +122,6 @@
   };
 
   window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.METHOD[0], window.constants.LOAD_URL);
-  // ================================================================================= //
 
   var activateDocument = function () {
     removeFaded();
@@ -144,6 +144,7 @@
     window.elements.adForm.addEventListener('submit', submitFormEvent);
     window.elements.reset.addEventListener('click', window.form.noClickResetForm);
     window.elements.reset.addEventListener('keydown', window.form.noClickResetForm);
+    window.elements.filterForm.addEventListener('change', window.filter.onFilterChange);
   };
 
 })();

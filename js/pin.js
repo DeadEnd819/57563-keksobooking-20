@@ -39,7 +39,7 @@
     activatePins: function (ads) {
       var fragment = document.createDocumentFragment();
 
-      for (var i = 0; i < ads.length; i++) {
+      for (var i = 0; i < window.constants.NUMBER_ADS; i++) { // ads.length заменить на NUMBER_ADS
         var elem = this.createPin(ads[i]);
         elem.dataset.id = 'pin_' + i;
         window.map.pinDataName[i] = elem.dataset.id;

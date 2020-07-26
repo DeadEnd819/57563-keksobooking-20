@@ -19,8 +19,6 @@ var optionCapacity = capacity.querySelectorAll('option');
 var description = adForm.querySelector('#description');
 var reset = adForm.querySelector('.ad-form__reset');
 var filterForm = document.querySelector('.map__filters');
-
-
 var mapPins = document.querySelector('.map__pins');
 
 window.elements = {
