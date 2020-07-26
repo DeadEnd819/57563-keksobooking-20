@@ -1,6 +1,17 @@
 'use strict';
 
 (function () {
+  var clearForm = function () {
+    window.elements.roomNumber.value = '1';
+    window.elements.capacity.value = '1';
+    setCapacity();
+    setMinPrice();
+
+    window.elements.adForm.reset();
+    window.pin.resetMainPin();
+    window.map.setMainPinAddress();
+  };
+
   var setMinPrice = function () {
     var minValue = 0;
     var placeholderValue = 0;
@@ -70,4 +81,19 @@
   setCapacity();
 
   window.elements.roomNumber.addEventListener('change', setCapacity);
+
+  var noClickResetForm = function (evt) {
+    var buttonPressed = evt.button;
+
+    evt.preventDefault();
+
+    if (buttonPressed === 0 || evt.key === 'Enter') {
+      window.form.clearForm();
+    }
+  };
+
+  window.form = {
+    clearForm: clearForm,
+    noClickResetForm: noClickResetForm,
+  };
 })();

@@ -10,6 +10,23 @@
       pinElement.querySelector('img').alt = ad.offer.title;
       return pinElement;
     },
+    resetMainPin: function () {
+      if (window.map.startMainPinTop === 0 && window.map.startMainPinLeft === 0) {
+        window.map.startMainPinTop = window.elements.mapPinMain.style.top;
+        window.map.startMainPinLeft = window.elements.mapPinMain.style.left;
+      } else {
+        window.elements.mapPinMain.style.top = window.map.startMainPinTop;
+        window.elements.mapPinMain.style.left = window.map.startMainPinLeft;
+      }
+    },
+    deletePins: function () {
+      if (window.map.pinsArr !== []) {
+        window.map.pinsArr.forEach(function (it) {
+          it.remove();
+        });
+      }
+      window.map.pinsArr = [];
+    },
     setPinsArr: function (mapPins) {
       var elems = mapPins.querySelectorAll('.map__pin');
       var elemsArr = [];
@@ -21,8 +38,9 @@
     },
     activatePins: function (ads) {
       var fragment = document.createDocumentFragment();
+      var adsMaxCount = ads.length < window.constants.NUMBER_ADS ? ads.length : window.constants.NUMBER_ADS;
 
-      for (var i = 0; i < ads.length; i++) {
+      for (var i = 0; i < adsMaxCount; i++) {
         var elem = this.createPin(ads[i]);
         elem.dataset.id = 'pin_' + i;
         window.map.pinDataName[i] = elem.dataset.id;
