@@ -38,8 +38,9 @@
     },
     activatePins: function (ads) {
       var fragment = document.createDocumentFragment();
+      var adsMaxCount = ads.length < window.constants.NUMBER_ADS ? ads.length : window.constants.NUMBER_ADS;
 
-      for (var i = 0; i < window.constants.NUMBER_ADS; i++) {
+      for (var i = 0; i < adsMaxCount; i++) {
         var elem = this.createPin(ads[i]);
         elem.dataset.id = 'pin_' + i;
         window.map.pinDataName[i] = elem.dataset.id;

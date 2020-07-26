@@ -65,7 +65,6 @@
 
   disableForm();
 
-  // ================================================================================= //
   var onClickSuccessMessageClose = function (evt) {
     var buttonPressed = evt.button;
 

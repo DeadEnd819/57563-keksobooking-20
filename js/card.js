@@ -1,22 +1,22 @@
 'use strict';
 
 (function () {
-  var cardBlock = {
-    'title': '.popup__title',
-    'address': '.popup__text--address',
-    'price': '.popup__text--price',
-    'type': '.popup__type',
-    'rooms': '.popup__text--capacity',
-    'guests': '.popup__text--capacity',
-    'checkin': '.popup__text--time',
-    'checkout': '.popup__text--time',
-    'features': '.popup__features',
-    'description': '.popup__description',
-    'photos': '.popup__photos',
-    'avatar': '.popup__avatar',
-  };
-
-  var offerTag = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'features', 'description', 'photos'];
+  // var cardBlock = {
+  //   'title': '.popup__title',
+  //   'address': '.popup__text--address',
+  //   'price': '.popup__text--price',
+  //   'type': '.popup__type',
+  //   'rooms': '.popup__text--capacity',
+  //   'guests': '.popup__text--capacity',
+  //   'checkin': '.popup__text--time',
+  //   'checkout': '.popup__text--time',
+  //   'features': '.popup__features',
+  //   'description': '.popup__description',
+  //   'photos': '.popup__photos',
+  //   'avatar': '.popup__avatar',
+  // };
+  //
+  // var offerTag = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'features', 'description', 'photos'];
 
   var cardTemplate = document.querySelector('#card')
     .content
@@ -87,13 +87,15 @@
       setFeatures(ad);
       setPhotos(ad);
 
-      for (var i = 0; i < offerTag.length; i++) {
-        var elem = cardElement.querySelector(cardBlock[offerTag[i]]);
+      // ************** Фильтр не работающих блоков карточек ***************** // Не работает
 
-        if (elem.textContent === '') {
-          elem.style.display = 'none';
-        }
-      }
+      // for (var i = 0; i < offerTag.length; i++) {
+      //   var elem = cardElement.querySelector(cardBlock[offerTag[i]]);
+      //
+      //   if (elem.textContent === '') {
+      //     elem.style.display = 'none';
+      //   }
+      // }
 
       document.querySelector('.map').insertAdjacentElement('beforebegin', cardElement);
 
