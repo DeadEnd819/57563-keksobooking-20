@@ -5,6 +5,10 @@
   var pinsArr = [];
   var startMainPinTop = 0;
   var startMainPinLeft = 0;
+  var startCoords = {
+    x: 0,
+    y: 0,
+  };
 
   window.map = {
     pinDataName: pinDataName,
@@ -58,11 +62,6 @@
     },
   };
 
-  var startCoords = {
-    x: 0,
-    y: 0,
-  };
-
   var onMouseMove = function (moveEvt) {
     var shift = {
       x: startCoords.x - moveEvt.clientX,
@@ -73,6 +72,11 @@
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
+
+    window.elements.mapPins.addEventListener('mouseleave', function leave() {
+      onMouseUp();
+      window.elements.mapPins.removeEventListener('mouseleave', leave);
+    });
 
     if (parseInt(window.elements.mapPinMain.style.top, 10) - shift.y >= window.constants.LOCATION_Y_MIN - window.constants.PIN_HEIGHT &&
       parseInt(window.elements.mapPinMain.style.top, 10) - shift.y <= window.constants.LOCATION_Y_MAX - window.constants.PIN_HEIGHT) {
