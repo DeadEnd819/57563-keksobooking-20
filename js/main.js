@@ -26,13 +26,13 @@
   };
 
   var submitFormEvent = function (evt) {
-    window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.METHOD[1], window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
+    window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.methods[1], window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
     evt.preventDefault();
   };
 
   var disableForm = function () {
     window.map.setMainPinAddress();
-    window.form.clearForm();
+    window.form.clear();
     addFaded();
 
     for (var i = 0; i < window.elements.fieldset.length; i++) {
@@ -50,8 +50,8 @@
     window.map.setMainPinAddress();
     window.map.pinsRemoveEventOpenCard();
     window.pin.deletePins();
-    window.card.clearCard();
-    window.filter.resetFilters();
+    window.card.clear();
+    window.filter.reset();
 
     window.elements.mapPinMain.addEventListener('mousedown', onPinPress);
     window.elements.mapPinMain.addEventListener('keydown', onPinPress);
@@ -119,9 +119,10 @@
     disableForm();
   };
 
-  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.METHOD[0], window.constants.LOAD_URL);
+  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.methods[0], window.constants.LOAD_URL);
 
   var activateDocument = function () {
+    // window.pin.activatePins(window.api.dataAds);
     window.filter.updatePins();
     removeFaded();
 

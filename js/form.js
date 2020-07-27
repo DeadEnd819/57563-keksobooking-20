@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var clearForm = function () {
+  var clear = function () {
     window.elements.roomNumber.value = '1';
     window.elements.capacity.value = '1';
     setCapacity();
@@ -89,12 +89,12 @@
     evt.preventDefault();
 
     if (buttonPressed === 0 || evt.key === 'Enter') {
-      window.form.clearForm();
+      window.form.clear();
     }
   };
 
   window.form = {
-    clearForm: clearForm,
+    clear: clear,
     noClickResetForm: noClickResetForm,
   };
 })();
