@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var activeDocument = false;
+  var activeDocument = true;
 
   window.main = {
     activeDocument: activeDocument,
@@ -26,7 +26,8 @@
   };
 
   var submitFormEvent = function (evt) {
-    window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.methods[1], window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
+    window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.Methods.POST,
+        window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
     evt.preventDefault();
   };
 
@@ -57,8 +58,8 @@
     window.elements.mapPinMain.addEventListener('keydown', onPinPress);
 
     window.elements.adForm.removeEventListener('submit', submitFormEvent);
-    window.elements.reset.removeEventListener('click', window.form.noClickResetForm);
-    window.elements.reset.removeEventListener('keydown', window.form.noClickResetForm);
+    window.elements.reset.removeEventListener('click', window.form.onClickResetForm);
+    window.elements.reset.removeEventListener('keydown', window.form.onClickResetForm);
     window.elements.filterForm.removeEventListener('change', window.filter.onFilterChange);
   };
 
@@ -119,7 +120,7 @@
     disableForm();
   };
 
-  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.methods[0], window.constants.LOAD_URL);
+  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.Methods.GET, window.constants.LOAD_URL);
 
   var activateDocument = function () {
     // window.pin.activatePins(window.api.dataAds);
@@ -141,10 +142,11 @@
     window.elements.mapPinMain.removeEventListener('keydown', onPinPress);
 
     window.elements.adForm.addEventListener('submit', submitFormEvent);
-    window.elements.reset.addEventListener('click', window.form.noClickResetForm);
-    window.elements.reset.addEventListener('keydown', window.form.noClickResetForm);
+    window.elements.reset.addEventListener('click', window.form.onClickResetForm);
+    window.elements.reset.addEventListener('keydown', window.form.onClickResetForm);
     window.elements.filterForm.addEventListener('change', window.filter.onFilterChange);
   };
+
 
 })();
 

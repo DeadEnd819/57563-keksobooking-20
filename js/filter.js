@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var Ads = window.api.dataAds;
+  var ads = window.api.dataAds;
   var alteredAds = [];
   var type = '';
   var price = '';
@@ -27,7 +27,7 @@
     var flag = true;
     window.constants.FEATURES.forEach(function (it) {
       if (featuresChecked[it]) {
-        flag = adFeatures.includes(it);
+        flag = flag && adFeatures.includes(it);
       }
     });
     return flag;
@@ -100,7 +100,7 @@
     window.pin.deletePins();
     window.card.clear();
 
-    window.filter.alteredAds = Ads.filter(function (ad) {
+    window.filter.alteredAds = ads.filter(function (ad) {
       return filterByType(ad.offer.type) &&
           filterByPrice(ad.offer.price) &&
           filterByGuests(ad.offer.guests) &&
@@ -179,8 +179,8 @@
       card.querySelector('.popup__avatar'),
     ];
 
-    window.constants.offerTags.forEach(function (it) {
-      var elem = card.querySelector(window.constants.cardBlocks[it]);
+    window.constants.OfferTags.forEach(function (it) {
+      var elem = card.querySelector(window.constants.CardBlocks[it]);
 
       if (elem.textContent === '') {
         elem.style.display = 'none';

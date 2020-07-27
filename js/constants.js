@@ -18,16 +18,20 @@ var LOAD_URL = 'https://javascript.pages.academy/keksobooking/data';
 var UPLOAD_URL = 'https://javascript.pages.academy/keksobooking';
 var TIMEOUT_IN_MS = 10000;
 var DEBOUNCE_INTERVAL = 500;
+var FORM_DEFAULT_VALUE = 1;
 
-
+var ValuesPrice = [0, 1000, 5000, 10000];
 var TypesHousing = {
   flat: 'Квартира',
   bungalo: 'Бунгало',
   house: 'Дом',
   palace: 'Дворец',
 };
-var methods = ['GET', 'POST'];
-var cardBlocks = {
+var Methods = {
+  'GET': 'GET',
+  'POST': 'POST'
+};
+var CardBlocks = {
   'title': '.popup__title',
   'address': '.popup__text--address',
   'price': '.popup__text--price',
@@ -38,7 +42,7 @@ var cardBlocks = {
   'checkout': '.popup__text--time',
   'description': '.popup__description',
 };
-var offerTags = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'description'];
+var OfferTags = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'description'];
 
 window.constants = {
   TYPES: TYPES,
@@ -57,8 +61,10 @@ window.constants = {
   UPLOAD_URL: UPLOAD_URL,
   TIMEOUT_IN_MS: TIMEOUT_IN_MS,
   DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL,
+  FORM_DEFAULT_VALUE: FORM_DEFAULT_VALUE,
   TypesHousing: TypesHousing,
-  methods: methods,
-  cardBlocks: cardBlocks,
-  offerTags: offerTags,
+  Methods: Methods,
+  CardBlocks: CardBlocks,
+  OfferTags: OfferTags,
+  ValuesPrice: ValuesPrice,
 };

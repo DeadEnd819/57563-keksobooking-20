@@ -2,10 +2,10 @@
 
 (function () {
   var clear = function () {
-    window.elements.roomNumber.value = '1';
-    window.elements.capacity.value = '1';
-    setCapacity();
-    setMinPrice();
+    window.elements.roomNumber.value = window.constants.FORM_DEFAULT_VALUE;
+    window.elements.capacity.value = window.constants.FORM_DEFAULT_VALUE;
+    onChangeCapacity();
+    onChangeMinPrice();
 
     window.elements.adForm.reset();
 
@@ -13,56 +13,55 @@
     window.map.setMainPinAddress();
   };
 
-  var setMinPrice = function () {
-    var minValue = 0;
-    var placeholderValue = 0;
+  var onChangeMinPrice = function () {
+    var minValue = window.constants.ValuesPrice[0];
+    var placeholderValue = window.constants.ValuesPrice[0];
 
     switch (window.elements.type.value) {
-      case window.constants.TYPES[0]:
-        minValue = 0;
-        placeholderValue = 0;
-        break;
       case window.constants.TYPES[1]:
-        minValue = 1000;
-        placeholderValue = 1000;
+        minValue = window.constants.ValuesPrice[1];
+        placeholderValue = window.constants.ValuesPrice[1];
         break;
       case window.constants.TYPES[2]:
-        minValue = 5000;
-        placeholderValue = 5000;
+        minValue = window.constants.ValuesPrice[2];
+        placeholderValue = window.constants.ValuesPrice[2];
         break;
-      default:
-        minValue = 10000;
-        placeholderValue = 10000;
+      case window.constants.TYPES[3]:
+        minValue = window.constants.ValuesPrice[3];
+        placeholderValue = window.constants.ValuesPrice[3];
+        break;
     }
 
     window.elements.price.setAttribute('min', minValue);
     window.elements.price.setAttribute('placeholder', placeholderValue);
   };
 
-  setMinPrice();
+  onChangeMinPrice();
 
-  window.elements.type.addEventListener('change', setMinPrice);
+  window.elements.type.addEventListener('change', onChangeMinPrice);
 
-  var setTimeOut = function () {
-    for (var i = 0; i < window.constants.CHECKINS.length; i++) {
-      if (window.elements.timeIn.value === window.constants.CHECKINS[i]) {
-        window.elements.timeOut.value = window.constants.CHECKOUTS[i];
-      }
+  var onChangeTime = function (evt) {
+
+    if (evt.target.id === window.elements.timeIn.id) {
+      window.elements.timeOut.value = window.constants.CHECKOUTS[evt.target.selectedIndex];
+      return;
     }
+    window.elements.timeIn.value = window.constants.CHECKINS[evt.target.selectedIndex];
+
+    // switch (evt.target.id) {
+    //   case 'timein':
+    //     window.elements.timeOut.value = window.constants.CHECKOUTS[evt.target.selectedIndex];
+    //     break;
+    //   case 'timeout':
+    //     window.elements.timeIn.value = window.constants.CHECKINS[evt.target.selectedIndex];
+    //     break;
+    // }
   };
 
-  var setTimeIn = function () {
-    for (var i = 0; i < window.constants.CHECKOUTS.length; i++) {
-      if (window.elements.timeOut.value === window.constants.CHECKOUTS[i]) {
-        window.elements.timeIn.value = window.constants.CHECKINS[i];
-      }
-    }
-  };
+  window.elements.timeIn.addEventListener('change', onChangeTime);
+  window.elements.timeOut.addEventListener('change', onChangeTime);
 
-  window.elements.timeIn.addEventListener('change', setTimeOut);
-  window.elements.timeOut.addEventListener('change', setTimeIn);
-
-  var setCapacity = function () {
+  var onChangeCapacity = function () {
     for (var i = 0; i < window.elements.optionCapacity.length; i++) {
       if (window.elements.roomNumber.value >= window.elements.optionCapacity[i].value && window.elements.optionCapacity[i].value !== '0') {
         window.elements.optionCapacity[i].disabled = false;
@@ -79,11 +78,11 @@
     }
   };
 
-  setCapacity();
+  onChangeCapacity();
 
-  window.elements.roomNumber.addEventListener('change', setCapacity);
+  window.elements.roomNumber.addEventListener('change', onChangeCapacity);
 
-  var noClickResetForm = function (evt) {
+  var onClickResetForm = function (evt) {
     var buttonPressed = evt.button;
 
     evt.preventDefault();
@@ -95,6 +94,6 @@
 
   window.form = {
     clear: clear,
-    noClickResetForm: noClickResetForm,
+    onClickResetForm: onClickResetForm,
   };
 })();
