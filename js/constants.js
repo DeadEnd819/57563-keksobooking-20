@@ -25,6 +25,19 @@ var UPLOAD_URL = 'https://javascript.pages.academy/keksobooking';
 var TIMEOUT_IN_MS = 10000;
 var METHOD = ['GET', 'POST'];
 var DEBOUNCE_INTERVAL = 500;
+var CARD_BLOCK = {
+  'title': '.popup__title',
+  'address': '.popup__text--address',
+  'price': '.popup__text--price',
+  'type': '.popup__type',
+  'rooms': '.popup__text--capacity',
+  'guests': '.popup__text--capacity',
+  'checkin': '.popup__text--time',
+  'checkout': '.popup__text--time',
+  'description': '.popup__description',
+};
+
+var OFFER_TAG = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'description'];
 
 window.constants = {
   TYPES: TYPES,
@@ -45,4 +58,6 @@ window.constants = {
   TIMEOUT_IN_MS: TIMEOUT_IN_MS,
   METHOD: METHOD,
   DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL,
+  CARD_BLOCK: CARD_BLOCK,
+  OFFER_TAG: OFFER_TAG,
 };

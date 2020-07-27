@@ -16,7 +16,6 @@
     window.elements.adForm.classList.remove('ad-form--disabled');
   };
 
-
   var onPinPress = function (evt) {
     var buttonPressed = evt.button;
 
@@ -52,7 +51,7 @@
     window.map.pinsRemoveEventOpenCard();
     window.pin.deletePins();
     window.card.clearCard();
-    window.elements.filterForm.reset();
+    window.filter.resetFilters();
 
     window.elements.mapPinMain.addEventListener('mousedown', onPinPress);
     window.elements.mapPinMain.addEventListener('keydown', onPinPress);
