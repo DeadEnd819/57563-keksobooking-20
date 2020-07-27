@@ -1,5 +1,19 @@
 'use strict';
 (function () {
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, window.constants.DEBOUNCE_INTERVAL);
+    };
+  };
+
   var getRandomInRange = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
@@ -28,6 +42,7 @@
   };
 
   window.utils = {
+    debounce: debounce,
     getRandomInRange: getRandomInRange,
     arrayRandElement: arrayRandElement,
     cutArray: cutArray,

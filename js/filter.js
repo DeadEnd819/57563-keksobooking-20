@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var Ads = window.api.arrAds;
+  var Ads = window.api.dataAds;
   var alteredAds = [];
   var type = '';
   var price = '';
@@ -96,7 +96,7 @@
     window.pin.activatePins(window.filter.alteredAds);
   };
 
-  var onFilterChange = function (evt) {
+  var onFilterChange = window.utils.debounce(function (evt) {
     var elem = evt.target;
 
     switch (elem) {
@@ -141,10 +141,56 @@
         updatePins();
         break;
     }
+  });
+
+  var filterByCard = function () {
+    var card = document.querySelector('.map__card');
+    var featuresCard = card.querySelector('.popup__features');
+    var photosCard = card.querySelector('.popup__photos');
+    var avatarCard = card.querySelector('.popup__avatar');
+
+    for (var i = 0; i < window.constants.OFFER_TAG.length; i++) {
+      var elem = card.querySelector(window.constants.CARD_BLOCK[window.constants.OFFER_TAG[i]]);
+
+      if (elem.textContent === '') {
+        elem.style.display = 'none';
+      }
+    }
+
+    if (featuresCard.childNodes.length === 0) {
+      featuresCard.style.display = 'none';
+    }
+
+    if (photosCard.childNodes.length === 0) {
+      photosCard.style.display = 'none';
+    }
+
+    if (avatarCard.src === '') {
+      avatarCard.style.display = 'none';
+    }
   };
+
+  var resetFilters = function () {
+    window.elements.filterForm.reset();
+
+    alteredAds = [];
+    type = '';
+    price = '';
+    rooms = 0;
+    guests = 0;
+    dishwasherChecked = false;
+    wifiChecked = false;
+    parkingChecked = false;
+    washerChecked = false;
+    elevatorChecked = false;
+    conditionerChecked = false;
+  };
+
 
   window.filter = {
     updatePins: updatePins,
+    filterByCard: filterByCard,
+    resetFilters: resetFilters,
     onFilterChange: onFilterChange,
     alteredAds: alteredAds,
   };
