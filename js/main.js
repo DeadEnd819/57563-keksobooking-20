@@ -122,6 +122,7 @@
   window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.METHOD[0], window.constants.LOAD_URL);
 
   var activateDocument = function () {
+    window.filter.updatePins();
     removeFaded();
 
     for (var i = 0; i < window.elements.fieldset.length; i++) {
@@ -132,7 +133,6 @@
       window.elements.select[j].disabled = false;
     }
 
-    window.filter.updatePins();
     window.map.pinsAddEventOpenCard();
     window.main.activeDocument = true;
 
