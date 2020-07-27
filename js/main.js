@@ -88,7 +88,7 @@
   var onSuccessLoadData = function (data) {
     for (var i = 0; i < data.length; i++) {
       if (typeof data[i]['offer'] !== 'undefined') {
-        window.api.arrAds.push(data[i]);
+        window.api.dataAds.push(data[i]);
       }
     }
   };

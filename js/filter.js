@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var Ads = window.api.arrAds;
+  var Ads = window.api.dataAds;
   var alteredAds = [];
   var type = '';
   var price = '';
