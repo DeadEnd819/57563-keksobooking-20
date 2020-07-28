@@ -1,10 +1,6 @@
 'use strict';
 (function () {
-  var activeDocument = false;
-
-  window.main = {
-    activeDocument: activeDocument,
-  };
+  var activeDocument = true;
 
   var addFaded = function () {
     document.querySelector('.map').classList.add('map--faded');
@@ -19,55 +15,23 @@
   var onPinPress = function (evt) {
     var buttonPressed = evt.button;
 
-    if (buttonPressed === 0 || evt.key === 'Enter') {
+    if (buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.enter) {
       activateDocument();
       window.map.setMainPinAddress();
     }
   };
 
   var submitFormEvent = function (evt) {
-    window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.METHOD[1], window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
+    window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.Methods.POST,
+        window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
     evt.preventDefault();
   };
-
-  var disableForm = function () {
-    window.map.setMainPinAddress();
-    window.form.clearForm();
-    addFaded();
-
-    for (var i = 0; i < window.elements.fieldset.length; i++) {
-      window.elements.fieldset[i].disabled = true;
-    }
-
-    for (var j = 0; j < window.elements.select.length; j++) {
-      window.elements.select[j].disabled = true;
-    }
-
-    window.main.activeDocument = false;
-
-    window.pin.resetMainPin();
-
-    window.map.setMainPinAddress();
-    window.map.pinsRemoveEventOpenCard();
-    window.pin.deletePins();
-    window.card.clearCard();
-    window.filter.resetFilters();
-
-    window.elements.mapPinMain.addEventListener('mousedown', onPinPress);
-    window.elements.mapPinMain.addEventListener('keydown', onPinPress);
-
-    window.elements.adForm.removeEventListener('submit', submitFormEvent);
-    window.elements.reset.removeEventListener('click', window.form.noClickResetForm);
-    window.elements.reset.removeEventListener('keydown', window.form.noClickResetForm);
-    window.elements.filterForm.removeEventListener('change', window.filter.onFilterChange);
-  };
-
-  disableForm();
 
   var onClickSuccessMessageClose = function (evt) {
     var buttonPressed = evt.button;
 
-    if (evt.target.className === 'success' && buttonPressed === 0 || evt.key === 'Escape') {
+    if (evt.target.className === window.constants.Answers.success &&
+      buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.escape) {
       document.querySelector('main').removeChild(document.querySelector('.success'));
       document.removeEventListener('click', onClickSuccessMessageClose);
       document.removeEventListener('keydown', onClickSuccessMessageClose);
@@ -77,7 +41,9 @@
   var onClickErrorMessageClose = function (evt) {
     var buttonPressed = evt.button;
     var errorButton = document.querySelector('.error__button');
-    if (evt.target.className === 'error' || evt.target.className === 'error__button' && buttonPressed === 0 || evt.key === 'Escape') {
+    if (evt.target.className === window.constants.Answers.success ||
+      evt.target.className === 'error__button' && buttonPressed === window.constants.Buttons.mouseLeft ||
+      evt.key === window.constants.Buttons.escape) {
       document.querySelector('main').removeChild(document.querySelector('.error'));
       errorButton.removeEventListener('click', onClickErrorMessageClose);
       document.removeEventListener('click', onClickErrorMessageClose);
@@ -86,11 +52,11 @@
   };
 
   var onSuccessLoadData = function (data) {
-    for (var i = 0; i < data.length; i++) {
-      if (typeof data[i]['offer'] !== 'undefined') {
-        window.api.dataAds.push(data[i]);
+    data.forEach(function (dataAd) {
+      if (dataAd['offer'] !== undefined) {
+        window.api.dataAds.push(dataAd);
       }
-    }
+    });
   };
 
   var createErrorMessage = function (message) {
@@ -119,19 +85,49 @@
     disableForm();
   };
 
-  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.METHOD[0], window.constants.LOAD_URL);
+
+  var disableForm = function () {
+    window.map.setMainPinAddress();
+    window.form.clear();
+    addFaded();
+
+    window.elements.fieldset.forEach(function (fieldset) {
+      fieldset.disabled = true;
+    });
+
+    window.elements.select.forEach(function (select) {
+      select.disabled = true;
+    });
+
+    window.main.activeDocument = false;
+
+    window.pin.resetMain();
+    window.map.pinsRemoveEventOpenCard();
+    window.pin.remove();
+    window.card.clear();
+    window.filter.reset();
+
+    window.elements.mapPinMain.addEventListener('mousedown', onPinPress);
+    window.elements.mapPinMain.addEventListener('keydown', onPinPress);
+
+    window.elements.adForm.removeEventListener('submit', submitFormEvent);
+    window.elements.reset.removeEventListener('click', window.form.onClickReset);
+    window.elements.reset.removeEventListener('keydown', window.form.onClickReset);
+    window.elements.filterForm.removeEventListener('change', window.filter.onChangeFilter);
+    window.form.removeEvents();
+  };
 
   var activateDocument = function () {
     window.filter.updatePins();
     removeFaded();
 
-    for (var i = 0; i < window.elements.fieldset.length; i++) {
-      window.elements.fieldset[i].disabled = false;
-    }
+    window.elements.fieldset.forEach(function (fieldset) {
+      fieldset.disabled = false;
+    });
 
-    for (var j = 0; j < window.elements.select.length; j++) {
-      window.elements.select[j].disabled = false;
-    }
+    window.elements.select.forEach(function (select) {
+      select.disabled = false;
+    });
 
     window.map.pinsAddEventOpenCard();
     window.main.activeDocument = true;
@@ -140,10 +136,18 @@
     window.elements.mapPinMain.removeEventListener('keydown', onPinPress);
 
     window.elements.adForm.addEventListener('submit', submitFormEvent);
-    window.elements.reset.addEventListener('click', window.form.noClickResetForm);
-    window.elements.reset.addEventListener('keydown', window.form.noClickResetForm);
-    window.elements.filterForm.addEventListener('change', window.filter.onFilterChange);
+    window.elements.reset.addEventListener('click', window.form.onClickReset);
+    window.elements.reset.addEventListener('keydown', window.form.onClickReset);
+    window.elements.filterForm.addEventListener('change', window.filter.onChangeFilter);
+    window.form.addEvents();
   };
 
+  window.main = {
+    activeDocument: activeDocument,
+    disableForm: disableForm,
+  };
+
+  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.Methods.GET, window.constants.LOAD_URL);
+  disableForm();
 })();
 

@@ -1,68 +1,51 @@
 'use strict';
 
 (function () {
-  var clearForm = function () {
-    window.elements.roomNumber.value = '1';
-    window.elements.capacity.value = '1';
-    setCapacity();
-    setMinPrice();
+  var clear = function () {
+    window.elements.roomNumber.value = window.constants.FORM_DEFAULT_VALUE;
+    window.elements.capacity.value = window.constants.FORM_DEFAULT_VALUE;
 
     window.elements.adForm.reset();
 
-    window.pin.resetMainPin();
+    onChangeCapacity();
+    onChangeMinPrice();
+    window.pin.resetMain();
     window.map.setMainPinAddress();
   };
 
-  var setMinPrice = function () {
-    var minValue = 0;
-    var placeholderValue = 0;
+  var onChangeMinPrice = function () {
+    var minValue = window.constants.ValuesPrice[0];
+    var placeholderValue = window.constants.ValuesPrice[0];
 
     switch (window.elements.type.value) {
-      case window.constants.TYPES[0]:
-        minValue = 0;
-        placeholderValue = 0;
-        break;
       case window.constants.TYPES[1]:
-        minValue = 1000;
-        placeholderValue = 1000;
+        minValue = window.constants.ValuesPrice[1];
+        placeholderValue = window.constants.ValuesPrice[1];
         break;
       case window.constants.TYPES[2]:
-        minValue = 5000;
-        placeholderValue = 5000;
+        minValue = window.constants.ValuesPrice[2];
+        placeholderValue = window.constants.ValuesPrice[2];
         break;
-      default:
-        minValue = 10000;
-        placeholderValue = 10000;
+      case window.constants.TYPES[3]:
+        minValue = window.constants.ValuesPrice[3];
+        placeholderValue = window.constants.ValuesPrice[3];
+        break;
     }
 
     window.elements.price.setAttribute('min', minValue);
     window.elements.price.setAttribute('placeholder', placeholderValue);
   };
 
-  setMinPrice();
+  var onChangeTime = function (evt) {
 
-  window.elements.type.addEventListener('change', setMinPrice);
-
-  var setTimeOut = function () {
-    for (var i = 0; i < window.constants.CHECKINS.length; i++) {
-      if (window.elements.timeIn.value === window.constants.CHECKINS[i]) {
-        window.elements.timeOut.value = window.constants.CHECKOUTS[i];
-      }
+    if (evt.target.id === window.elements.timeIn.id) {
+      window.elements.timeOut.value = window.constants.CHECKOUTS[evt.target.selectedIndex];
+      return;
     }
+    window.elements.timeIn.value = window.constants.CHECKINS[evt.target.selectedIndex];
   };
 
-  var setTimeIn = function () {
-    for (var i = 0; i < window.constants.CHECKOUTS.length; i++) {
-      if (window.elements.timeOut.value === window.constants.CHECKOUTS[i]) {
-        window.elements.timeIn.value = window.constants.CHECKINS[i];
-      }
-    }
-  };
-
-  window.elements.timeIn.addEventListener('change', setTimeOut);
-  window.elements.timeOut.addEventListener('change', setTimeIn);
-
-  var setCapacity = function () {
+  var onChangeCapacity = function () {
     for (var i = 0; i < window.elements.optionCapacity.length; i++) {
       if (window.elements.roomNumber.value >= window.elements.optionCapacity[i].value && window.elements.optionCapacity[i].value !== '0') {
         window.elements.optionCapacity[i].disabled = false;
@@ -79,22 +62,35 @@
     }
   };
 
-  setCapacity();
-
-  window.elements.roomNumber.addEventListener('change', setCapacity);
-
-  var noClickResetForm = function (evt) {
+  var onClickReset = function (evt) {
     var buttonPressed = evt.button;
 
     evt.preventDefault();
 
-    if (buttonPressed === 0 || evt.key === 'Enter') {
-      window.form.clearForm();
+    if (buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.enter) {
+      window.main.disableForm();
     }
   };
 
+  var addEvents = function () {
+    window.elements.type.addEventListener('change', onChangeMinPrice);
+    window.elements.timeIn.addEventListener('change', onChangeTime);
+    window.elements.timeOut.addEventListener('change', onChangeTime);
+    window.elements.roomNumber.addEventListener('change', onChangeCapacity);
+  };
+
+  var removeEvents = function () {
+    window.elements.type.removeEventListener('change', onChangeMinPrice);
+    window.elements.timeIn.removeEventListener('change', onChangeTime);
+    window.elements.timeOut.removeEventListener('change', onChangeTime);
+    window.elements.roomNumber.removeEventListener('change', onChangeCapacity);
+  };
+
+
   window.form = {
-    clearForm: clearForm,
-    noClickResetForm: noClickResetForm,
+    clear: clear,
+    onClickReset: onClickReset,
+    addEvents: addEvents,
+    removeEvents: removeEvents,
   };
 })();
