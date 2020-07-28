@@ -15,7 +15,7 @@
   var onPinPress = function (evt) {
     var buttonPressed = evt.button;
 
-    if (buttonPressed === 0 || evt.key === 'Enter') {
+    if (buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.enter) {
       activateDocument();
       window.map.setMainPinAddress();
     }
@@ -27,42 +27,11 @@
     evt.preventDefault();
   };
 
-  var disableForm = function () {
-    window.map.setMainPinAddress();
-    window.form.clear();
-    addFaded();
-
-    window.elements.fieldset.forEach(function (fieldset) {
-      fieldset.disabled = true;
-    });
-
-    window.elements.select.forEach(function (select) {
-      select.disabled = true;
-    });
-
-    window.main.activeDocument = false;
-
-    window.pin.resetMain();
-
-    window.map.setMainPinAddress();
-    window.map.pinsRemoveEventOpenCard();
-    window.pin.remove();
-    window.card.clear();
-    window.filter.reset();
-
-    window.elements.mapPinMain.addEventListener('mousedown', onPinPress);
-    window.elements.mapPinMain.addEventListener('keydown', onPinPress);
-
-    window.elements.adForm.removeEventListener('submit', submitFormEvent);
-    window.elements.reset.removeEventListener('click', window.form.onClickResetForm);
-    window.elements.reset.removeEventListener('keydown', window.form.onClickResetForm);
-    window.elements.filterForm.removeEventListener('change', window.filter.onFilterChange);
-  };
-
   var onClickSuccessMessageClose = function (evt) {
     var buttonPressed = evt.button;
 
-    if (evt.target.className === window.constants.Answers.success && buttonPressed === 0 || evt.key === 'Escape') {
+    if (evt.target.className === window.constants.Answers.success &&
+      buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.escape) {
       document.querySelector('main').removeChild(document.querySelector('.success'));
       document.removeEventListener('click', onClickSuccessMessageClose);
       document.removeEventListener('keydown', onClickSuccessMessageClose);
@@ -73,7 +42,8 @@
     var buttonPressed = evt.button;
     var errorButton = document.querySelector('.error__button');
     if (evt.target.className === window.constants.Answers.success ||
-      evt.target.className === 'error__button' && buttonPressed === 0 || evt.key === 'Escape') {
+      evt.target.className === 'error__button' && buttonPressed === window.constants.Buttons.mouseLeft ||
+      evt.key === window.constants.Buttons.escape) {
       document.querySelector('main').removeChild(document.querySelector('.error'));
       errorButton.removeEventListener('click', onClickErrorMessageClose);
       document.removeEventListener('click', onClickErrorMessageClose);
@@ -115,8 +85,40 @@
     disableForm();
   };
 
+
+  var disableForm = function () {
+    window.map.setMainPinAddress();
+    window.form.clear();
+    addFaded();
+
+    window.elements.fieldset.forEach(function (fieldset) {
+      fieldset.disabled = true;
+    });
+
+    window.elements.select.forEach(function (select) {
+      select.disabled = true;
+    });
+
+    window.main.activeDocument = false;
+
+    window.pin.resetMain();
+    window.map.setMainPinAddress();
+    window.map.pinsRemoveEventOpenCard();
+    window.pin.remove();
+    window.card.clear();
+    window.filter.reset();
+
+    window.elements.mapPinMain.addEventListener('mousedown', onPinPress);
+    window.elements.mapPinMain.addEventListener('keydown', onPinPress);
+
+    window.elements.adForm.removeEventListener('submit', submitFormEvent);
+    window.elements.reset.removeEventListener('click', window.form.onClickResetForm);
+    window.elements.reset.removeEventListener('keydown', window.form.onClickResetForm);
+    window.elements.filterForm.removeEventListener('change', window.filter.onChangeFilter);
+    window.form.removeEvents();
+  };
+
   var activateDocument = function () {
-    // window.pin.activate(window.api.dataAds);
     window.filter.updatePins();
     removeFaded();
 
@@ -137,7 +139,8 @@
     window.elements.adForm.addEventListener('submit', submitFormEvent);
     window.elements.reset.addEventListener('click', window.form.onClickResetForm);
     window.elements.reset.addEventListener('keydown', window.form.onClickResetForm);
-    window.elements.filterForm.addEventListener('change', window.filter.onFilterChange);
+    window.elements.filterForm.addEventListener('change', window.filter.onChangeFilter);
+    window.form.addEvents();
   };
 
   window.main = {

@@ -24,10 +24,10 @@
 
     document.querySelector('.map').insertAdjacentElement('beforebegin', cardElement);
 
-    window.filter.filterByBlock();
+    window.filter.byBlocks();
 
-    cardElement.querySelector('.popup__close').addEventListener('click', closeCard);
-    document.addEventListener('keydown', closeCard);
+    cardElement.querySelector('.popup__close').addEventListener('click', onClickCloseCard);
+    document.addEventListener('keydown', onClickCloseCard);
   };
 
   var setFeatures = function (ad) {
@@ -35,8 +35,8 @@
     var features = ad.offer.features;
     featuresTemplate.innerHTML = '';
 
-    features.forEach(function (it) {
-      var elem = '<li class="popup__feature popup__feature--' + it + '"></li>';
+    features.forEach(function (feature) {
+      var elem = '<li class="popup__feature popup__feature--' + feature + '"></li>';
       featuresTemplate.insertAdjacentHTML('beforeend', elem);
     });
   };
@@ -46,16 +46,16 @@
     var photos = ad.offer.photos;
     photoTemplate.innerHTML = '';
 
-    photos.forEach(function (it) {
-      var elem = '<img src="' + it + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+    photos.forEach(function (photo) {
+      var elem = '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
       photoTemplate.insertAdjacentHTML('beforeend', elem);
     });
   };
 
-  var closeCard = function (evt) {
+  var onClickCloseCard = function (evt) {
     var buttonPressed = evt.button;
 
-    if (buttonPressed === 0 || evt.key === 'Escape') {
+    if (buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.escape) {
       window.card.activePin.classList.remove('map__pin--active');
       window.card.clear();
     }
@@ -69,8 +69,8 @@
     }
 
     popup.parentNode.removeChild(popup);
-    cardElement.querySelector('.popup__close').removeEventListener('click', closeCard);
-    document.removeEventListener('keydown', closeCard);
+    cardElement.querySelector('.popup__close').removeEventListener('click', onClickCloseCard);
+    document.removeEventListener('keydown', onClickCloseCard);
 
     if (window.main.activeDocument) {
       window.map.pinsAddEventOpenCard();

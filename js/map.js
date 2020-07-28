@@ -13,11 +13,10 @@
   var onClickOpenCard = function (evt) {
     var buttonPressed = evt.button;
 
-    if (buttonPressed === 0 || evt.key === 'Enter') {
+    if (buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.enter) {
       if (window.card.activePin !== '') {
         window.card.activePin.classList.remove('map__pin--active');
       }
-
       for (var i = 0; i < window.map.dataPins.length; i++) {
         if (window.map.pinDataName[i] === evt.target.dataset.id || window.map.pinDataName[i] === evt.target.parentElement.dataset.id) {
           window.card.createCard(window.filter.alteredAds[i], window.map.dataPins[i]);

@@ -79,7 +79,7 @@
     window.pin.activate(window.filter.alteredAds);
   };
 
-  var onFilterChange = window.utils.debounce(function (evt) {
+  var onChangeFilter = window.utils.debounce(function (evt) {
     var elem = evt.target;
     var name = elem.getAttribute('id')
       .replace('housing-', '')
@@ -93,7 +93,7 @@
     updatePins();
   });
 
-  var filterByBlock = function () {
+  var byBlocks = function () {
     var card = document.querySelector('.map__card');
     var imgBlock = [
       card.querySelector('.popup__features'),
@@ -101,21 +101,21 @@
       card.querySelector('.popup__avatar'),
     ];
 
-    window.constants.OfferTags.forEach(function (it) {
-      var elem = card.querySelector(window.constants.CardBlocks[it]);
+    window.constants.OfferTags.forEach(function (tag) {
+      var elem = card.querySelector(window.constants.CardBlocks[tag]);
 
       if (elem.textContent === '') {
         elem.style.display = 'none';
-      } else {
-        elem.removeAttribute('style');
+        return;
       }
+      elem.removeAttribute('style');
     });
 
-    imgBlock.forEach(function (it) {
-      if (it.childNodes.length === 0 && it.src === undefined || it.src !== undefined && it.src === '') {
-        it.style.display = 'none';
+    imgBlock.forEach(function (block) {
+      if (block.childNodes.length === 0 && block.src === undefined || block.src !== undefined && block.src === '') {
+        block.style.display = 'none';
       } else {
-        it.removeAttribute('style');
+        block.removeAttribute('style');
       }
     });
   };
@@ -130,9 +130,9 @@
 
   window.filter = {
     updatePins: updatePins,
-    filterByBlock: filterByBlock,
+    byBlocks: byBlocks,
     reset: reset,
-    onFilterChange: onFilterChange,
+    onChangeFilter: onChangeFilter,
     alteredAds: alteredAds,
   };
 })();

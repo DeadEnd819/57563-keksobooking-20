@@ -47,6 +47,11 @@ var CardBlocks = {
   'description': '.popup__description',
 };
 var OfferTags = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'description'];
+var Buttons = {
+  'escape': 'Escape',
+  'enter': 'Enter',
+  'mouseLeft': 0,
+};
 
 window.constants = {
   TYPES: TYPES,
@@ -72,4 +77,5 @@ window.constants = {
   CardBlocks: CardBlocks,
   OfferTags: OfferTags,
   ValuesPrice: ValuesPrice,
+  Buttons: Buttons,
 };

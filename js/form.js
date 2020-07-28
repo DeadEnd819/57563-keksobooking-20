@@ -4,11 +4,11 @@
   var clear = function () {
     window.elements.roomNumber.value = window.constants.FORM_DEFAULT_VALUE;
     window.elements.capacity.value = window.constants.FORM_DEFAULT_VALUE;
-    onChangeCapacity();
-    onChangeMinPrice();
 
     window.elements.adForm.reset();
 
+    onChangeCapacity();
+    onChangeMinPrice();
     window.pin.resetMain();
     window.map.setMainPinAddress();
   };
@@ -36,10 +36,6 @@
     window.elements.price.setAttribute('placeholder', placeholderValue);
   };
 
-  onChangeMinPrice();
-
-  window.elements.type.addEventListener('change', onChangeMinPrice);
-
   var onChangeTime = function (evt) {
 
     if (evt.target.id === window.elements.timeIn.id) {
@@ -47,19 +43,7 @@
       return;
     }
     window.elements.timeIn.value = window.constants.CHECKINS[evt.target.selectedIndex];
-
-    // switch (evt.target.id) {
-    //   case 'timein':
-    //     window.elements.timeOut.value = window.constants.CHECKOUTS[evt.target.selectedIndex];
-    //     break;
-    //   case 'timeout':
-    //     window.elements.timeIn.value = window.constants.CHECKINS[evt.target.selectedIndex];
-    //     break;
-    // }
   };
-
-  window.elements.timeIn.addEventListener('change', onChangeTime);
-  window.elements.timeOut.addEventListener('change', onChangeTime);
 
   var onChangeCapacity = function () {
     for (var i = 0; i < window.elements.optionCapacity.length; i++) {
@@ -78,22 +62,35 @@
     }
   };
 
-  onChangeCapacity();
-
-  window.elements.roomNumber.addEventListener('change', onChangeCapacity);
-
   var onClickResetForm = function (evt) {
     var buttonPressed = evt.button;
 
     evt.preventDefault();
 
-    if (buttonPressed === 0 || evt.key === 'Enter') {
+    if (buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.enter) {
       window.form.clear();
     }
   };
 
+  var addEvents = function () {
+    window.elements.type.addEventListener('change', onChangeMinPrice);
+    window.elements.timeIn.addEventListener('change', onChangeTime);
+    window.elements.timeOut.addEventListener('change', onChangeTime);
+    window.elements.roomNumber.addEventListener('change', onChangeCapacity);
+  };
+
+  var removeEvents = function () {
+    window.elements.type.removeEventListener('change', onChangeMinPrice);
+    window.elements.timeIn.removeEventListener('change', onChangeTime);
+    window.elements.timeOut.removeEventListener('change', onChangeTime);
+    window.elements.roomNumber.removeEventListener('change', onChangeCapacity);
+  };
+
+
   window.form = {
     clear: clear,
     onClickResetForm: onClickResetForm,
+    addEvents: addEvents,
+    removeEvents: removeEvents,
   };
 })();

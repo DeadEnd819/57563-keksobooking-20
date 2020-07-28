@@ -22,8 +22,8 @@
 
   var remove = function () {
     if (window.map.dataPins !== []) {
-      window.map.dataPins.forEach(function (it) {
-        it.remove();
+      window.map.dataPins.forEach(function (pin) {
+        pin.remove();
       });
     }
     window.map.dataPins = [];
@@ -33,9 +33,9 @@
     var pins = mapPins.querySelectorAll('.map__pin');
     var elems = [];
 
-    pins.forEach(function (it) {
-      if (!it.classList.contains('map__pin--main')) {
-        elems.push(it);
+    pins.forEach(function (pin) {
+      if (!pin.classList.contains('map__pin--main')) {
+        elems.push(pin);
       }
     });
 
