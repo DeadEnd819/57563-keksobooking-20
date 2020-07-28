@@ -62,13 +62,13 @@
     }
   };
 
-  var onClickResetForm = function (evt) {
+  var onClickReset = function (evt) {
     var buttonPressed = evt.button;
 
     evt.preventDefault();
 
     if (buttonPressed === window.constants.Buttons.mouseLeft || evt.key === window.constants.Buttons.enter) {
-      window.form.clear();
+      window.main.disableForm();
     }
   };
 
@@ -89,7 +89,7 @@
 
   window.form = {
     clear: clear,
-    onClickResetForm: onClickResetForm,
+    onClickReset: onClickReset,
     addEvents: addEvents,
     removeEvents: removeEvents,
   };

@@ -102,7 +102,6 @@
     window.main.activeDocument = false;
 
     window.pin.resetMain();
-    window.map.setMainPinAddress();
     window.map.pinsRemoveEventOpenCard();
     window.pin.remove();
     window.card.clear();
@@ -112,8 +111,8 @@
     window.elements.mapPinMain.addEventListener('keydown', onPinPress);
 
     window.elements.adForm.removeEventListener('submit', submitFormEvent);
-    window.elements.reset.removeEventListener('click', window.form.onClickResetForm);
-    window.elements.reset.removeEventListener('keydown', window.form.onClickResetForm);
+    window.elements.reset.removeEventListener('click', window.form.onClickReset);
+    window.elements.reset.removeEventListener('keydown', window.form.onClickReset);
     window.elements.filterForm.removeEventListener('change', window.filter.onChangeFilter);
     window.form.removeEvents();
   };
@@ -137,14 +136,15 @@
     window.elements.mapPinMain.removeEventListener('keydown', onPinPress);
 
     window.elements.adForm.addEventListener('submit', submitFormEvent);
-    window.elements.reset.addEventListener('click', window.form.onClickResetForm);
-    window.elements.reset.addEventListener('keydown', window.form.onClickResetForm);
+    window.elements.reset.addEventListener('click', window.form.onClickReset);
+    window.elements.reset.addEventListener('keydown', window.form.onClickReset);
     window.elements.filterForm.addEventListener('change', window.filter.onChangeFilter);
     window.form.addEvents();
   };
 
   window.main = {
     activeDocument: activeDocument,
+    disableForm: disableForm,
   };
 
   window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.Methods.GET, window.constants.LOAD_URL);
