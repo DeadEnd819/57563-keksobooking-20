@@ -19,7 +19,6 @@ var UPLOAD_URL = 'https://javascript.pages.academy/keksobooking';
 var TIMEOUT_IN_MS = 10000;
 var DEBOUNCE_INTERVAL = 500;
 var FORM_DEFAULT_VALUE = 1;
-
 var ValuesPrice = [0, 1000, 5000, 10000];
 var TypesHousing = {
   flat: 'Квартира',
