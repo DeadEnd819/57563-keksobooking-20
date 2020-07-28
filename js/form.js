@@ -9,7 +9,7 @@
 
     window.elements.adForm.reset();
 
-    window.pin.resetMainPin();
+    window.pin.resetMain();
     window.map.setMainPinAddress();
   };
 

@@ -21,28 +21,7 @@ var reset = adForm.querySelector('.ad-form__reset');
 var filterForm = document.querySelector('.map__filters');
 var mapPins = document.querySelector('.map__pins');
 
-var typeFilter = filterForm.querySelector('#housing-type');
-var priceFilter = filterForm.querySelector('#housing-price');
-var roomsFilter = filterForm.querySelector('#housing-rooms');
-var guestsFilter = filterForm.querySelector('#housing-guests');
-var dishwasherFilter = filterForm.querySelector('#filter-dishwasher');
-var wifiFilter = filterForm.querySelector('#filter-wifi');
-var parkingFilter = filterForm.querySelector('#filter-parking');
-var washerFilter = filterForm.querySelector('#filter-washer');
-var elevatorFilter = filterForm.querySelector('#filter-elevator');
-var conditionerFilter = filterForm.querySelector('#filter-conditioner');
-
 window.elements = {
-  typeFilter: typeFilter,
-  priceFilter: priceFilter,
-  roomsFilter: roomsFilter,
-  guestsFilter: guestsFilter,
-  dishwasherFilter: dishwasherFilter,
-  wifiFilter: wifiFilter,
-  parkingFilter: parkingFilter,
-  washerFilter: washerFilter,
-  elevatorFilter: elevatorFilter,
-  conditionerFilter: conditionerFilter,
   pinTemplate: pinTemplate,
   fieldset: fieldset,
   select: select,

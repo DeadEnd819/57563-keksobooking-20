@@ -31,6 +31,10 @@ var Methods = {
   'GET': 'GET',
   'POST': 'POST'
 };
+var Answers = {
+  'success': 'success',
+  'error': 'error'
+};
 var CardBlocks = {
   'title': '.popup__title',
   'address': '.popup__text--address',
@@ -64,6 +68,7 @@ window.constants = {
   FORM_DEFAULT_VALUE: FORM_DEFAULT_VALUE,
   TypesHousing: TypesHousing,
   Methods: Methods,
+  Answers: Answers,
   CardBlocks: CardBlocks,
   OfferTags: OfferTags,
   ValuesPrice: ValuesPrice,

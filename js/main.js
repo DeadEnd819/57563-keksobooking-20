@@ -2,10 +2,6 @@
 (function () {
   var activeDocument = true;
 
-  window.main = {
-    activeDocument: activeDocument,
-  };
-
   var addFaded = function () {
     document.querySelector('.map').classList.add('map--faded');
     window.elements.adForm.classList.add('ad-form--disabled');
@@ -36,21 +32,21 @@
     window.form.clear();
     addFaded();
 
-    for (var i = 0; i < window.elements.fieldset.length; i++) {
-      window.elements.fieldset[i].disabled = true;
-    }
+    window.elements.fieldset.forEach(function (fieldset) {
+      fieldset.disabled = true;
+    });
 
-    for (var j = 0; j < window.elements.select.length; j++) {
-      window.elements.select[j].disabled = true;
-    }
+    window.elements.select.forEach(function (select) {
+      select.disabled = true;
+    });
 
     window.main.activeDocument = false;
 
-    window.pin.resetMainPin();
+    window.pin.resetMain();
 
     window.map.setMainPinAddress();
     window.map.pinsRemoveEventOpenCard();
-    window.pin.deletePins();
+    window.pin.remove();
     window.card.clear();
     window.filter.reset();
 
@@ -63,12 +59,10 @@
     window.elements.filterForm.removeEventListener('change', window.filter.onFilterChange);
   };
 
-  disableForm();
-
   var onClickSuccessMessageClose = function (evt) {
     var buttonPressed = evt.button;
 
-    if (evt.target.className === 'success' && buttonPressed === 0 || evt.key === 'Escape') {
+    if (evt.target.className === window.constants.Answers.success && buttonPressed === 0 || evt.key === 'Escape') {
       document.querySelector('main').removeChild(document.querySelector('.success'));
       document.removeEventListener('click', onClickSuccessMessageClose);
       document.removeEventListener('keydown', onClickSuccessMessageClose);
@@ -78,7 +72,8 @@
   var onClickErrorMessageClose = function (evt) {
     var buttonPressed = evt.button;
     var errorButton = document.querySelector('.error__button');
-    if (evt.target.className === 'error' || evt.target.className === 'error__button' && buttonPressed === 0 || evt.key === 'Escape') {
+    if (evt.target.className === window.constants.Answers.success ||
+      evt.target.className === 'error__button' && buttonPressed === 0 || evt.key === 'Escape') {
       document.querySelector('main').removeChild(document.querySelector('.error'));
       errorButton.removeEventListener('click', onClickErrorMessageClose);
       document.removeEventListener('click', onClickErrorMessageClose);
@@ -87,11 +82,11 @@
   };
 
   var onSuccessLoadData = function (data) {
-    for (var i = 0; i < data.length; i++) {
-      if (typeof data[i]['offer'] !== 'undefined') {
-        window.api.dataAds.push(data[i]);
+    data.forEach(function (dataAd) {
+      if (dataAd['offer'] !== undefined) {
+        window.api.dataAds.push(dataAd);
       }
-    }
+    });
   };
 
   var createErrorMessage = function (message) {
@@ -120,20 +115,18 @@
     disableForm();
   };
 
-  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.Methods.GET, window.constants.LOAD_URL);
-
   var activateDocument = function () {
-    // window.pin.activatePins(window.api.dataAds);
+    // window.pin.activate(window.api.dataAds);
     window.filter.updatePins();
     removeFaded();
 
-    for (var i = 0; i < window.elements.fieldset.length; i++) {
-      window.elements.fieldset[i].disabled = false;
-    }
+    window.elements.fieldset.forEach(function (fieldset) {
+      fieldset.disabled = false;
+    });
 
-    for (var j = 0; j < window.elements.select.length; j++) {
-      window.elements.select[j].disabled = false;
-    }
+    window.elements.select.forEach(function (select) {
+      select.disabled = false;
+    });
 
     window.map.pinsAddEventOpenCard();
     window.main.activeDocument = true;
@@ -147,6 +140,11 @@
     window.elements.filterForm.addEventListener('change', window.filter.onFilterChange);
   };
 
+  window.main = {
+    activeDocument: activeDocument,
+  };
 
+  window.api.dataExchange(onSuccessLoadData, createErrorMessage, window.constants.Methods.GET, window.constants.LOAD_URL);
+  disableForm();
 })();
 
