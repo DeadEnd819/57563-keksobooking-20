@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   var debounce = function (cb) {
     var lastTimeout = null;

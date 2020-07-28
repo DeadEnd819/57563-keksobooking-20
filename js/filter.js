@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   var FILTER_VALUE_ANY = 'any';
   var PRICE_VALUES = [10000, 50000];
