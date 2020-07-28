@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var FILTER_VALUE_ANY = 'any';
+  var PRICE_VALUES = [10000, 50000];
   var ads = window.api.dataAds;
   var alteredAds = [];
   var filters;
@@ -20,9 +21,7 @@
   var filterByFeatures = function (adFeatures) {
     var result = true;
     window.constants.FEATURES.forEach(function (feature) {
-      if (filters[feature]) {
-        result = result && adFeatures.includes(feature);
-      }
+      result = filters[feature] ? (result && adFeatures.includes(feature)) : result;
     });
     return result;
   };
@@ -34,17 +33,17 @@
 
     switch (filters.price) {
       case 'middle':
-        if (adPrice >= 10000 && adPrice <= 50000) {
+        if (adPrice >= PRICE_VALUES[0] && adPrice <= PRICE_VALUES[1]) {
           return true;
         }
         break;
       case 'low':
-        if (adPrice < 10000) {
+        if (adPrice < PRICE_VALUES[0]) {
           return true;
         }
         break;
       case 'high':
-        if (adPrice > 50000) {
+        if (adPrice > PRICE_VALUES[1]) {
           return true;
         }
         break;
@@ -79,21 +78,17 @@
     window.pin.activate(window.filter.alteredAds);
   };
 
-  var onChangeFilter = window.utils.debounce(function (evt) {
-    var elem = evt.target;
-    var name = elem.getAttribute('id')
+  var formChangeHandler = window.utils.debounce(function (evt) {
+    var target = evt.target;
+    var name = target.getAttribute('id')
       .replace('housing-', '')
       .replace('filter-', '');
 
-    if (window.constants.FEATURES.includes(name)) {
-      filters[name] = !filters[name];
-    } else {
-      filters[name] = elem.value;
-    }
+    filters[name] = window.constants.FEATURES.includes(name) ? !filters[name] : target.value;
     updatePins();
   });
 
-  var byBlocks = function () {
+  var hidesEmptyBlocks = function () {
     var card = document.querySelector('.map__card');
     var imgBlock = [
       card.querySelector('.popup__features'),
@@ -102,13 +97,13 @@
     ];
 
     window.constants.OfferTags.forEach(function (tag) {
-      var elem = card.querySelector(window.constants.CardBlocks[tag]);
+      var block = card.querySelector(window.constants.CardBlocks[tag]);
 
-      if (elem.textContent === '') {
-        elem.style.display = 'none';
+      if (block.textContent === '') {
+        block.style.display = 'none';
         return;
       }
-      elem.removeAttribute('style');
+      block.removeAttribute('style');
     });
 
     imgBlock.forEach(function (block) {
@@ -130,9 +125,9 @@
 
   window.filter = {
     updatePins: updatePins,
-    byBlocks: byBlocks,
+    hidesEmptyBlocks: hidesEmptyBlocks,
     reset: reset,
-    onChangeFilter: onChangeFilter,
+    formChangeHandler: formChangeHandler,
     alteredAds: alteredAds,
   };
 })();

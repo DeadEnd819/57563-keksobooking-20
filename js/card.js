@@ -7,7 +7,7 @@
   var cardElement = cardTemplate.cloneNode(true);
   var activePin = '';
 
-  var createCard = function (ad, pin) {
+  var create = function (ad, pin) {
     window.card.activePin = pin;
     window.card.clear();
 
@@ -24,7 +24,7 @@
 
     document.querySelector('.map').insertAdjacentElement('beforebegin', cardElement);
 
-    window.filter.byBlocks();
+    window.filter.hidesEmptyBlocks();
 
     cardElement.querySelector('.popup__close').addEventListener('click', onClickCloseCard);
     document.addEventListener('keydown', onClickCloseCard);
@@ -36,8 +36,8 @@
     featuresTemplate.innerHTML = '';
 
     features.forEach(function (feature) {
-      var elem = '<li class="popup__feature popup__feature--' + feature + '"></li>';
-      featuresTemplate.insertAdjacentHTML('beforeend', elem);
+      var featureElement = '<li class="popup__feature popup__feature--' + feature + '"></li>';
+      featuresTemplate.insertAdjacentHTML('beforeend', featureElement);
     });
   };
 
@@ -47,8 +47,8 @@
     photoTemplate.innerHTML = '';
 
     photos.forEach(function (photo) {
-      var elem = '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
-      photoTemplate.insertAdjacentHTML('beforeend', elem);
+      var photoElement = '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+      photoTemplate.insertAdjacentHTML('beforeend', photoElement);
     });
   };
 
@@ -80,6 +80,6 @@
   window.card = {
     activePin: activePin,
     clear: clear,
-    createCard: createCard,
+    create: create,
   };
 })();

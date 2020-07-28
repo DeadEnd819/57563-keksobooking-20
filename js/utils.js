@@ -18,27 +18,27 @@
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  var arrayRandElement = function (arr) {
-    var rand = Math.floor(Math.random() * arr.length);
-    return arr[rand];
+  var arrayRandElement = function (data) {
+    var element = Math.floor(Math.random() * data.length);
+    return data[element];
   };
 
-  var cutArray = function (arr) {
-    var newArray = arr.slice();
-    newArray.length = getRandomInRange(1, newArray.length);
-    return newArray;
+  var cutArray = function (data) {
+    var newData = data.slice();
+    newData.length = getRandomInRange(1, newData.length);
+    return newData;
   };
 
-  var shuffleArray = function (arr) {
-    var newArray = arr.slice();
-    for (var i = 0; i < newArray.length; i++) {
-      var j = getRandomInRange(0, newArray.length - 1);
-      var temp = newArray[i];
-      newArray[i] = newArray[j];
-      newArray[j] = temp;
+  var shuffleArray = function (data) {
+    var newData = data.slice();
+    for (var i = 0; i < newData.length; i++) {
+      var j = getRandomInRange(0, newData.length - 1);
+      var temp = newData[i];
+      newData[i] = newData[j];
+      newData[j] = temp;
     }
 
-    return cutArray(newArray);
+    return cutArray(newData);
   };
 
   window.utils = {

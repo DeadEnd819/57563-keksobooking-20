@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var pinDataName = [];
+  var pinDataNames = [];
   var dataPins = [];
   var startMainPinTop = 0;
   var startMainPinLeft = 0;
@@ -18,8 +18,8 @@
         window.card.activePin.classList.remove('map__pin--active');
       }
       for (var i = 0; i < window.map.dataPins.length; i++) {
-        if (window.map.pinDataName[i] === evt.target.dataset.id || window.map.pinDataName[i] === evt.target.parentElement.dataset.id) {
-          window.card.createCard(window.filter.alteredAds[i], window.map.dataPins[i]);
+        if (window.map.pinDataNames[i] === evt.target.dataset.id || window.map.pinDataNames[i] === evt.target.parentElement.dataset.id) {
+          window.card.create(window.filter.alteredAds[i], window.map.dataPins[i]);
           window.map.dataPins[i].classList.add('map__pin--active');
           break;
         }
@@ -101,7 +101,7 @@
   });
 
   window.map = {
-    pinDataName: pinDataName,
+    pinDataNames: pinDataNames,
     dataPins: dataPins,
     startMainPinTop: startMainPinTop,
     startMainPinLeft: startMainPinLeft,

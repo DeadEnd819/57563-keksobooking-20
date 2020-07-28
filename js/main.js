@@ -21,7 +21,7 @@
     }
   };
 
-  var submitFormEvent = function (evt) {
+  var onSubmitFormEvent = function (evt) {
     window.api.dataExchange(createSuccessMessage, createErrorMessage, window.constants.Methods.POST,
         window.constants.UPLOAD_URL, new FormData(window.elements.adForm));
     evt.preventDefault();
@@ -110,10 +110,10 @@
     window.elements.mapPinMain.addEventListener('mousedown', onPinPress);
     window.elements.mapPinMain.addEventListener('keydown', onPinPress);
 
-    window.elements.adForm.removeEventListener('submit', submitFormEvent);
+    window.elements.adForm.removeEventListener('submit', onSubmitFormEvent);
     window.elements.reset.removeEventListener('click', window.form.onClickReset);
     window.elements.reset.removeEventListener('keydown', window.form.onClickReset);
-    window.elements.filterForm.removeEventListener('change', window.filter.onChangeFilter);
+    window.elements.filterForm.removeEventListener('change', window.filter.formChangeHandler);
     window.form.removeEvents();
   };
 
@@ -135,10 +135,10 @@
     window.elements.mapPinMain.removeEventListener('mousedown', onPinPress);
     window.elements.mapPinMain.removeEventListener('keydown', onPinPress);
 
-    window.elements.adForm.addEventListener('submit', submitFormEvent);
+    window.elements.adForm.addEventListener('submit', onSubmitFormEvent);
     window.elements.reset.addEventListener('click', window.form.onClickReset);
     window.elements.reset.addEventListener('keydown', window.form.onClickReset);
-    window.elements.filterForm.addEventListener('change', window.filter.onChangeFilter);
+    window.elements.filterForm.addEventListener('change', window.filter.formChangeHandler);
     window.form.addEvents();
   };
 

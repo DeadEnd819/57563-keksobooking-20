@@ -49,7 +49,7 @@
     for (var i = 0; i < adsMaxCount; i++) {
       var elem = create(ads[i]);
       elem.dataset.id = 'pin_' + i;
-      window.map.pinDataName[i] = elem.dataset.id;
+      window.map.pinDataNames[i] = elem.dataset.id;
       fragment.appendChild(elem);
     }
     window.elements.mapPins.appendChild(fragment);
